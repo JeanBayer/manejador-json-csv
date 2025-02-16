@@ -6,8 +6,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useKeyPress } from "@/hooks/use-key-press";
+import { useClickAway } from "@uidotdev/usehooks";
 import { GalleryVerticalEnd } from "lucide-react";
-import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 interface NavItem {
@@ -27,22 +28,18 @@ const navItems: NavItem[] = [
 
 export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
   const location = useLocation();
+  const ref = useClickAway<HTMLDivElement>(() => {
+    setIsOpen(false);
+  });
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(!isOpen);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [setIsOpen, isOpen]);
+  useKeyPress("Escape", () => setIsOpen(!isOpen));
 
   return (
-    <Sidebar className="border-r z-[100] bg-accent w-64" variant="floating">
+    <Sidebar
+      className="border-r z-[100] bg-accent w-64"
+      variant="floating"
+      ref={ref}
+    >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem className="list-none">
