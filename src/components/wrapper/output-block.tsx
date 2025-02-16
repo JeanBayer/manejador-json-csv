@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"; // Asegúrate de importar tu componente Button
 import { Textarea } from "@/components/ui/textarea";
-import { SelectInput } from "@/components/wrapper/selectInput";
+import { SelectInput } from "@/components/wrapper/select-input";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useDownloadFile } from "@/hooks/use-download-file";
 

@@ -1,5 +1,5 @@
-import { InputBlock } from "@/components/wrapper/InputBlock";
-import { OutputBlock } from "@/components/wrapper/OutputBlock";
+import { InputBlock } from "@/components/wrapper/input-block";
+import { OutputBlock } from "@/components/wrapper/output-block";
 import { useMatchLogic } from "@/hooks/use-match-logic";
 
 export const MatchLogicPage = () => {

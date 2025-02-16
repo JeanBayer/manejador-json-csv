@@ -1,5 +1,5 @@
-import { InputBlock } from "@/components/wrapper/InputBlock";
-import { TextAreaOutput } from "@/components/wrapper/OutputBlock";
+import { InputBlock } from "@/components/wrapper/input-block";
+import { TextAreaOutput } from "@/components/wrapper/output-block";
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { convertToCustomCSV } from "@/utils/helpers";
