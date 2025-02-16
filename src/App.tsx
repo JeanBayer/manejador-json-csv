@@ -15,6 +15,8 @@ function App() {
     outputFormat,
     setOutputFormat,
     formattedOutput,
+    totalRows,
+    matchedRows,
   } = useMatchLogic();
 
   return (
@@ -37,6 +39,8 @@ function App() {
         outputFormat={outputFormat}
         setOutputFormat={setOutputFormat}
         output={formattedOutput}
+        totalRows={totalRows}
+        matchedRows={matchedRows}
       />
     </div>
   );

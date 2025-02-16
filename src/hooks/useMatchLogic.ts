@@ -38,6 +38,9 @@ export function useMatchLogic() {
     return JSON.stringify(matchedData, null, 2);
   }, [matchedData, outputFormat]);
 
+  const totalRows = matchedData.length;
+  const matchedRows = matchedData.filter((item) => item.match).length;
+
   return {
     inputText1,
     setInputText1,
@@ -50,5 +53,7 @@ export function useMatchLogic() {
     outputFormat,
     setOutputFormat,
     formattedOutput,
+    totalRows,
+    matchedRows,
   };
 }

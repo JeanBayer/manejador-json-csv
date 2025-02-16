@@ -8,19 +8,23 @@ interface OutputBlockProps {
   outputFormat: "json" | "csv";
   setOutputFormat: (value: "json" | "csv") => void;
   output: string;
+  totalRows: number;
+  matchedRows: number;
 }
 
 export const OutputBlock: React.FC<OutputBlockProps> = ({
   outputFormat,
   setOutputFormat,
   output,
+  totalRows,
+  matchedRows,
 }) => {
   const { copyToClipboard } = useCopyToClipboard();
   const { downloadFile } = useDownloadFile();
 
   return (
     <div className="flex flex-col gap-4">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="block text-sm font-medium text-gray-700">
         Output Format
         <SelectInput
           onValueChange={setOutputFormat}
@@ -57,6 +61,9 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
           </div>
         </div>
       </label>
+      <div className="text-sm text-muted-foreground text-right">
+        Total Rows/Objects: {totalRows}, Matched: {matchedRows}
+      </div>
     </div>
   );
 };
