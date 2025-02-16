@@ -18,7 +18,7 @@ export function useMatchLogic() {
   const [matchField2, setMatchField2] = useState("id");
   const [outputFormat, setOutputFormat] = useState<"json" | "csv">("json");
 
-  const [matchedData, setMatchedData] = useState([]);
+  const [matchedData, setMatchedData] = useState<{ match: boolean }[]>([]);
 
   const debounceMatchField1 = useDebounce(matchField1, 300);
   const debounceMatchField2 = useDebounce(matchField2, 300);
