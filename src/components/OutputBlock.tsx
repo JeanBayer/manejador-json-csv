@@ -2,6 +2,7 @@ import { SelectInput } from "@/components/wrapper/selectInput";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button"; // Asegúrate de importar tu componente Button
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { useDownloadFile } from "@/hooks/useDownloadFile";
 
 interface OutputBlockProps {
   outputFormat: "json" | "csv";
@@ -15,6 +16,7 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
   output,
 }) => {
   const { copyToClipboard } = useCopyToClipboard();
+  const { downloadFile } = useDownloadFile();
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,12 +36,20 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
           className="h-40"
           readOnly
         />
-        <Button
-          onClick={() => copyToClipboard(output)}
-          className="absolute top-2 right-2"
-        >
-          Copy
-        </Button>
+        <div className="absolute top-2 right-2 flex gap-2">
+          <Button
+            onClick={() => copyToClipboard(output)}
+            className="bg-blue-500 text-white"
+          >
+            Copy
+          </Button>
+          <Button
+            onClick={() => downloadFile(output, "output.txt")}
+            className="bg-green-500 text-white"
+          >
+            Download
+          </Button>
+        </div>
       </div>
     </div>
   );
