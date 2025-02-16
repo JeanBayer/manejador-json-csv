@@ -1,9 +1,12 @@
-import { useDebounce } from "@uidotdev/usehooks";
-import { useState } from "react";
+import { useDebounce, useSessionStorage } from "@uidotdev/usehooks";
 
-export const useStateDebounce = (initialValue = "", duration = 500) => {
-  const [field, setField] = useState(initialValue);
+export const useStateDebounce = (
+  key: string,
+  initialValue = "",
+  duration = 500
+) => {
+  const [field, setField] = useSessionStorage(key, initialValue);
   const debounceField = useDebounce(field, duration);
 
-  return [debounceField, setField] as const;
+  return [field, setField, debounceField] as const;
 };

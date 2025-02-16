@@ -8,14 +8,20 @@ export function useMatchLogic() {
     text: inputText1,
     setText: setInputText1,
     jsonOutput: jsonOutput1,
-  } = useInputWithFormat();
+  } = useInputWithFormat("match-logic-input-text1");
   const {
     text: inputText2,
     setText: setInputText2,
     jsonOutput: jsonOutput2,
-  } = useInputWithFormat();
-  const [matchField1, setMatchField1] = useStateDebounce("identificador");
-  const [matchField2, setMatchField2] = useStateDebounce("id");
+  } = useInputWithFormat("match-logic-input-text2");
+  const [matchField1, setMatchField1, matchFieldDebounce1] = useStateDebounce(
+    "match-logic-match-field-text1",
+    "identificador"
+  );
+  const [matchField2, setMatchField2, matchFieldDebounce2] = useStateDebounce(
+    "match-logic-match-field-text2",
+    "id"
+  );
   const [outputFormat, setOutputFormat] = useState("json");
 
   const [matchedData, setMatchedData] = useState<{ match: boolean }[]>([]);
@@ -23,11 +29,16 @@ export function useMatchLogic() {
   useEffect(() => {
     if (jsonOutput1?.length && jsonOutput2?.length)
       return setMatchedData(
-        matchData(jsonOutput1, matchField1, jsonOutput2, matchField2)
+        matchData(
+          jsonOutput1,
+          matchFieldDebounce1,
+          jsonOutput2,
+          matchFieldDebounce2
+        )
       );
 
     setMatchedData([]);
-  }, [matchField1, matchField2, jsonOutput1, jsonOutput2]);
+  }, [matchFieldDebounce1, matchFieldDebounce2, jsonOutput1, jsonOutput2]);
 
   const formattedOutput = useMemo(() => {
     if (outputFormat === "csv") {
