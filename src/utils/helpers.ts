@@ -16,7 +16,7 @@ export const matchData = (
 };
 
 export const convertToCSV = (data: Record<string, any>[]) => {
-  if (data.length === 0) return "";
+  if (data?.length === 0) return "";
 
   const headers = Object.keys(data[0]);
   const csvRows = data.map((row) =>
@@ -24,4 +24,23 @@ export const convertToCSV = (data: Record<string, any>[]) => {
   );
 
   return [headers.join(","), ...csvRows].join("\n");
+};
+
+export const convertToCustomCSV = (
+  data: Record<string, any>[],
+  matchField: string
+) => {
+  if (!data?.length) return "";
+  console.log(data);
+
+  const csvRows = data
+    .filter((row) => row[matchField] !== undefined && row[matchField] !== null)
+    .map((row) => `'${row[matchField]}',`);
+
+  if (!csvRows.length || csvRows?.length <= 0) return "";
+
+  const csvRowsWithData = csvRows.join("\n");
+  const result = csvRowsWithData.substring(0, csvRowsWithData.length - 1);
+
+  return `${result}`;
 };

@@ -1,40 +1,30 @@
-import { useState } from "react";
+import { InputBlock } from "@/components/wrapper/InputBlock";
+import { TextAreaOutput } from "@/components/wrapper/OutputBlock";
+import { useInputWithFormat } from "@/hooks/useInputWithFormat";
+import { convertToCustomCSV } from "@/utils/helpers";
+import { useDebounce } from "@uidotdev/usehooks";
+import { useMemo, useState } from "react";
 
 export const StringConverterPage = () => {
-  const [inputText, setInputText] = useState("");
-  const [convertedText, setConvertedText] = useState("");
+  const { text, setText, jsonOutput } = useInputWithFormat();
+  const [matchField, setMatchField] = useState("identificador");
+  const debounceMatchField = useDebounce(matchField, 300);
 
-  const handleConvert = () => {
-    // Implement your string conversion logic here
-    setConvertedText(inputText.toUpperCase());
-  };
+  const formattedOutput = useMemo(() => {
+    return convertToCustomCSV(jsonOutput, debounceMatchField);
+  }, [jsonOutput, debounceMatchField]);
 
   return (
-    <div className="flex flex-col gap-8 px-4 py-4">
-      <div className="flex flex-col gap-4">
-        <label className="block text-sm font-medium text-gray-700">
-          Input Text
-          <textarea
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            className="mt-1 block w-full h-40"
-          />
-        </label>
-        <button
-          onClick={handleConvert}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Convert
-        </button>
-        <label className="block text-sm font-medium text-gray-700">
-          Converted Text
-          <textarea
-            value={convertedText}
-            readOnly
-            className="mt-1 block w-full h-40"
-          />
-        </label>
+    <div className="w-screen flex flex-col gap-8 px-4 py-4">
+      <div className="flex w-full gap-4">
+        <InputBlock
+          valueMatch={matchField}
+          setValueMatch={setMatchField}
+          text={text}
+          setText={setText}
+        />
       </div>
+      <TextAreaOutput value={formattedOutput} />
     </div>
   );
 };

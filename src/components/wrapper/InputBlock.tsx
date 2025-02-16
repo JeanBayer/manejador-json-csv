@@ -1,6 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 
 interface InputBlockProps {
   valueMatch: string;
@@ -26,7 +26,7 @@ export const InputBlock: React.FC<InputBlockProps> = ({
         <Input
           value={valueMatch}
           onChange={(e) => setValueMatch(e.target.value)}
-          className="mt-1 block w-full"
+          className="mt-1 block max-w-64"
         />
       </label>
       <label className="block text-sm font-medium text-gray-700">
