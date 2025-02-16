@@ -8,15 +8,28 @@ import {
 } from "@/components/ui/sidebar";
 import { GalleryVerticalEnd } from "lucide-react";
 import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-const navItems = [
-  { title: "Option 1", url: "#" },
-  { title: "Option 2", url: "#" },
+interface NavItem {
+  title: string;
+  url: string;
+}
+
+interface AppSidebarProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const navItems: NavItem[] = [
+  { title: "Match logic", url: "/match-logic" },
+  { title: "String converter", url: "/string-converter" },
 ];
 
-export function AppSidebar({ isOpen, setIsOpen }) {
+export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
+  const location = useLocation();
+
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsOpen(!isOpen);
       }
@@ -49,10 +62,16 @@ export function AppSidebar({ isOpen, setIsOpen }) {
         {navItems.map((item) => (
           <SidebarMenuItem
             key={item.title}
-            className="list-none hover:bg-foreground hover:text-[var(--text-foreground)] transition-colors duration-200"
+            className={`list-none transition-colors duration-200 ${
+              location.pathname === item.url
+                ? "bg-foreground text-[var(--text-foreground)]"
+                : "hover:bg-foreground hover:text-[var(--text-foreground)]"
+            }`}
           >
             <SidebarMenuButton asChild>
-              <a href={item.url}>{item.title}</a>
+              <Link to={item.url} onClick={() => setIsOpen(false)}>
+                {item.title}
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

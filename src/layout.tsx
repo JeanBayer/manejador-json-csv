@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { Toaster } from "./components/ui/toaster";
 import { AppSidebar } from "./components/wrapper/AppSideBar";
 
-export const Layout = ({ children }) => {
+export const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <SidebarProvider
@@ -14,7 +15,7 @@ export const Layout = ({ children }) => {
       <AppSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <main>
         <SidebarTrigger />
-        {children}
+        <Outlet />
         <Toaster />
       </main>
     </SidebarProvider>

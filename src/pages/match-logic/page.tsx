@@ -2,7 +2,7 @@ import { InputBlock } from "@/components/wrapper/InputBlock";
 import { OutputBlock } from "@/components/wrapper/OutputBlock";
 import { useMatchLogic } from "@/hooks/useMatchLogic";
 
-function App() {
+export const MatchLogicPage = () => {
   const {
     inputText1,
     setInputText1,
@@ -44,6 +44,4 @@ function App() {
       />
     </div>
   );
-}
-
-export default App;
+};
