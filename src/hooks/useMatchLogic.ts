@@ -24,11 +24,12 @@ export function useMatchLogic() {
   const debounceMatchField2 = useDebounce(matchField2, 300);
 
   useEffect(() => {
-    if (jsonOutput1?.length && jsonOutput2?.length) {
-      setMatchedData(
+    if (jsonOutput1?.length && jsonOutput2?.length)
+      return setMatchedData(
         matchData(jsonOutput1, matchField1, jsonOutput2, matchField2)
       );
-    }
+
+    setMatchedData([]);
   }, [debounceMatchField1, debounceMatchField2, jsonOutput1, jsonOutput2]);
 
   const formattedOutput = useMemo(() => {
