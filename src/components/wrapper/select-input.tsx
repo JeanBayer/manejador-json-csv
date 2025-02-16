@@ -6,7 +6,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const SelectInput = ({
+interface SelectInputProps {
+  onValueChange: (value: string) => void;
+  defaultValue: string;
+  items: { value: string; label: string }[];
+  className?: string;
+}
+
+export const SelectInput: React.FC<SelectInputProps> = ({
   onValueChange,
   defaultValue,
   items,

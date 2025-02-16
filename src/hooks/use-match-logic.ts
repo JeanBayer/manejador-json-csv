@@ -1,7 +1,7 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
+import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { convertToCSV, matchData } from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
-import { useStateDebounce } from "./use-state-debounce";
 
 export function useMatchLogic() {
   const {
@@ -16,7 +16,7 @@ export function useMatchLogic() {
   } = useInputWithFormat();
   const [matchField1, setMatchField1] = useStateDebounce("identificador");
   const [matchField2, setMatchField2] = useStateDebounce("id");
-  const [outputFormat, setOutputFormat] = useState<"json" | "csv">("json");
+  const [outputFormat, setOutputFormat] = useState("json");
 
   const [matchedData, setMatchedData] = useState<{ match: boolean }[]>([]);
 
