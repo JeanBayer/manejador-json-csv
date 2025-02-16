@@ -1,7 +1,7 @@
-import { useInputWithFormat } from "@/hooks/useInputWithFormat";
+import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { convertToCSV, matchData } from "@/utils/helpers";
-import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useMemo, useState } from "react";
+import { useStateDebounce } from "./use-state-debounce";
 
 export function useMatchLogic() {
   const {
@@ -14,14 +14,11 @@ export function useMatchLogic() {
     setText: setInputText2,
     jsonOutput: jsonOutput2,
   } = useInputWithFormat();
-  const [matchField1, setMatchField1] = useState("identificador");
-  const [matchField2, setMatchField2] = useState("id");
+  const [matchField1, setMatchField1] = useStateDebounce("identificador");
+  const [matchField2, setMatchField2] = useStateDebounce("id");
   const [outputFormat, setOutputFormat] = useState<"json" | "csv">("json");
 
   const [matchedData, setMatchedData] = useState<{ match: boolean }[]>([]);
-
-  const debounceMatchField1 = useDebounce(matchField1, 300);
-  const debounceMatchField2 = useDebounce(matchField2, 300);
 
   useEffect(() => {
     if (jsonOutput1?.length && jsonOutput2?.length)
@@ -30,7 +27,7 @@ export function useMatchLogic() {
       );
 
     setMatchedData([]);
-  }, [debounceMatchField1, debounceMatchField2, jsonOutput1, jsonOutput2]);
+  }, [matchField1, matchField2, jsonOutput1, jsonOutput2]);
 
   const formattedOutput = useMemo(() => {
     if (outputFormat === "csv") {

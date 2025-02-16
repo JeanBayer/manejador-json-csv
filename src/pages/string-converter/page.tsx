@@ -1,18 +1,17 @@
 import { InputBlock } from "@/components/wrapper/InputBlock";
 import { TextAreaOutput } from "@/components/wrapper/OutputBlock";
-import { useInputWithFormat } from "@/hooks/useInputWithFormat";
+import { useInputWithFormat } from "@/hooks/use-input-with-format";
+import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { convertToCustomCSV } from "@/utils/helpers";
-import { useDebounce } from "@uidotdev/usehooks";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export const StringConverterPage = () => {
   const { text, setText, jsonOutput } = useInputWithFormat();
-  const [matchField, setMatchField] = useState("identificador");
-  const debounceMatchField = useDebounce(matchField, 300);
+  const [matchField, setMatchField] = useStateDebounce("identificador");
 
   const formattedOutput = useMemo(() => {
-    return convertToCustomCSV(jsonOutput, debounceMatchField);
-  }, [jsonOutput, debounceMatchField]);
+    return jsonOutput ? convertToCustomCSV(jsonOutput, matchField) : "";
+  }, [jsonOutput, matchField]);
 
   return (
     <div className="w-screen flex flex-col gap-8 px-4 py-4">

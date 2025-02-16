@@ -1,6 +1,6 @@
 import { InputBlock } from "@/components/wrapper/InputBlock";
 import { OutputBlock } from "@/components/wrapper/OutputBlock";
-import { useMatchLogic } from "@/hooks/useMatchLogic";
+import { useMatchLogic } from "@/hooks/use-match-logic";
 
 export const MatchLogicPage = () => {
   const {
