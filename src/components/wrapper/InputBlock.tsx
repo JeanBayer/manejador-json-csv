@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 interface InputBlockProps {
   valueMatch: string;
@@ -14,6 +15,10 @@ export const InputBlock: React.FC<InputBlockProps> = ({
   text,
   setText,
 }) => {
+  const handleClear = () => {
+    setText("");
+  };
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       <label className="block text-sm font-medium text-gray-700">
@@ -26,12 +31,20 @@ export const InputBlock: React.FC<InputBlockProps> = ({
       </label>
       <label className="block text-sm font-medium text-gray-700">
         Data Input
-        <Textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Pega aquí tus datos"
-          className="mt-1 block w-full h-40"
-        />
+        <div className="relative">
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Pega aquí tus datos"
+            className="mt-1 block w-full h-40"
+          />
+          <Button
+            onClick={handleClear}
+            className="absolute top-2 right-2 bg-red-500 text-white"
+          >
+            Clear
+          </Button>
+        </div>
       </label>
     </div>
   );
