@@ -1,5 +1,5 @@
-import { InputBlock } from "@/components/InputBlock";
-import { OutputBlock } from "@/components/OutputBlock";
+import { InputBlock } from "@/components/wrapper/InputBlock";
+import { OutputBlock } from "@/components/wrapper/OutputBlock";
 import { useMatchLogic } from "@/hooks/useMatchLogic";
 
 function App() {
