@@ -16,7 +16,7 @@ export const DuplicateMarkerPage = () => {
   } = useDuplicateMarker();
 
   return (
-    <div className="w-screen flex flex-col gap-8 px-4 py-4">
+    <div className="w-screen flex gap-8 px-4 py-4">
       <InputBlock
         valueMatch={matchField}
         setValueMatch={setMatchField}

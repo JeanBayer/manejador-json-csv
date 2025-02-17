@@ -17,7 +17,7 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
   matchedRows,
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col flex-1 gap-4">
       <label className="block text-sm font-medium text-gray-700">
         Output Format
         <SelectInput

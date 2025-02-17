@@ -13,14 +13,14 @@ export const StringConverterPage = () => {
   } = useStringConverter();
 
   return (
-    <div className="w-screen flex flex-col gap-8 px-4 py-4">
+    <div className="w-screen flex gap-8 px-4 py-4">
       <InputBlock
         valueMatch={matchField}
         setValueMatch={setMatchField}
         text={text}
         setText={setText}
       />
-      <section>
+      <section className="flex flex-col flex-1 gap-4 mt-18">
         <TextAreaOutput value={formattedOutput} />
         <div className="text-sm text-muted-foreground text-right mt-4">
           Total Rows: {totalRows}
