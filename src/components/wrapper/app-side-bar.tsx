@@ -24,7 +24,8 @@ interface AppSidebarProps {
 const navItems: NavItem[] = [
   { title: "Match logic", url: "/match-logic" },
   { title: "String converter", url: "/string-converter" },
-  { title: "JSON/CSV Converter", url: "/json-csv-converter" }, // Agrega el nuevo ítem de navegación
+  { title: "JSON/CSV Converter", url: "/json-csv-converter" },
+  { title: "Duplicate Marker", url: "/duplicate-marker" }, // Agrega el nuevo ítem de navegación
 ];
 
 export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {

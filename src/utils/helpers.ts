@@ -91,3 +91,21 @@ export const parseStringToJson = (
 
   return data;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const markDuplicates = (data: any[] | null, field: string) => {
+  if (!data?.length) return [];
+
+  const fieldCounts = data.reduce((acc, item) => {
+    const fieldValue = item[field];
+    if (fieldValue) {
+      acc[fieldValue] = (acc[fieldValue] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
+
+  return data.map((item) => ({
+    ...item,
+    duplicate: fieldCounts[item[field]] > 1,
+  }));
+};
