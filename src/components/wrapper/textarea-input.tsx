@@ -13,7 +13,7 @@ export const TextAreaInput = ({ text, setText }: TextAreaInputProps) => {
 
   return (
     <label className="block text-sm font-medium text-gray-700">
-      Data Input
+      Data Input JSON/CSV
       <div className="relative">
         <Textarea
           value={text}

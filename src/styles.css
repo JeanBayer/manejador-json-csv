@@ -138,3 +138,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+@utility font-permanent-marker {
+  font-family: "Permanent Marker", serif;
+}
