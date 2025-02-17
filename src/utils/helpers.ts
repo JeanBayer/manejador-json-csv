@@ -27,12 +27,11 @@ export const convertToCSV = (data: Record<string, unknown>[]) => {
 };
 
 export const convertToFormat = (
-  data: Record<string, unknown>[],
+  data: Record<string, unknown>[] | null,
   format: string
 ) => {
-  if (format === "csv") {
-    return convertToCSV(data);
-  }
+  if (!data?.length) return "";
+  if (format === "csv") return convertToCSV(data);
   return JSON.stringify(data, null, 2);
 };
 
