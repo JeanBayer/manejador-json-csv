@@ -17,7 +17,7 @@ export const TextAreaOutput = ({ value }: TextAreaOutputProps) => {
         <Textarea
           value={value || ""}
           placeholder="output"
-          className="mt-1 block w-full h-[720px]"
+          className="mt-1 block w-full h-[540px]"
           readOnly
         />
         <div className="absolute top-2 right-2 flex gap-2">

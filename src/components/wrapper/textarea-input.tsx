@@ -19,7 +19,7 @@ export const TextAreaInput = ({ text, setText }: TextAreaInputProps) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Pega aquí tus datos"
-          className="mt-1 block w-full h-[720px]"
+          className="mt-1 block w-full h-[540px]"
         />
         <Button
           onClick={handleClear}
