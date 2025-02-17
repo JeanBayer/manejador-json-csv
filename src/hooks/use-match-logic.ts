@@ -1,6 +1,6 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
-import { convertToCSV, matchData } from "@/utils/helpers";
+import { convertToFormat, matchData } from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
 
 export function useMatchLogic() {
@@ -40,12 +40,10 @@ export function useMatchLogic() {
     setMatchedData([]);
   }, [matchFieldDebounce1, matchFieldDebounce2, jsonOutput1, jsonOutput2]);
 
-  const formattedOutput = useMemo(() => {
-    if (outputFormat === "csv") {
-      return convertToCSV(matchedData);
-    }
-    return JSON.stringify(matchedData, null, 2);
-  }, [matchedData, outputFormat]);
+  const formattedOutput = useMemo(
+    () => convertToFormat(matchedData, outputFormat),
+    [matchedData, outputFormat]
+  );
 
   const totalRows = matchedData.length;
   const matchedRows = matchedData.filter((item) => item.match).length;

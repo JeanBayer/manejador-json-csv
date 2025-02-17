@@ -1,7 +1,7 @@
 export const matchData = (
-  json1: Record<string, any>[],
+  json1: Record<string, unknown>[],
   matchField1: string,
-  json2: Record<string, any>[],
+  json2: Record<string, unknown>[],
   matchField2: string
 ) => {
   return json1.map((entry) => {
@@ -15,7 +15,7 @@ export const matchData = (
   });
 };
 
-export const convertToCSV = (data: Record<string, any>[]) => {
+export const convertToCSV = (data: Record<string, unknown>[]) => {
   if (data?.length === 0) return "";
 
   const headers = Object.keys(data[0]);
@@ -26,12 +26,21 @@ export const convertToCSV = (data: Record<string, any>[]) => {
   return [headers.join(","), ...csvRows].join("\n");
 };
 
+export const convertToFormat = (
+  data: Record<string, unknown>[],
+  format: string
+) => {
+  if (format === "csv") {
+    return convertToCSV(data);
+  }
+  return JSON.stringify(data, null, 2);
+};
+
 export const convertToCustomCSV = (
-  data: Record<string, any>[],
+  data: Record<string, unknown>[] | null,
   matchField: string
 ) => {
   if (!data?.length) return "";
-  console.log(data);
 
   const csvRows = data
     .filter((row) => row[matchField] !== undefined && row[matchField] !== null)
@@ -53,6 +62,7 @@ export const parseStringToJson = (
   // Intentar parsear como JSON directamente
   try {
     return JSON.parse(input);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.log("No es JSON, probando CSV...");
   }

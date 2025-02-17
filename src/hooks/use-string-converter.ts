@@ -12,9 +12,10 @@ export const useStringConverter = () => {
     "identificador"
   );
 
-  const formattedOutput = useMemo(() => {
-    return jsonOutput ? convertToCustomCSV(jsonOutput, matchFieldDebounce) : "";
-  }, [jsonOutput, matchFieldDebounce]);
+  const formattedOutput = useMemo(
+    () => convertToCustomCSV(jsonOutput, matchFieldDebounce),
+    [jsonOutput, matchFieldDebounce]
+  );
 
   const totalRows =
     formattedOutput.length > 0 ? formattedOutput.split("\n").length : 0;
