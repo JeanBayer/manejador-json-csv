@@ -1,5 +1,6 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { RoutePath } from "@/utils/constants";
 import { convertToFormat, matchData } from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
 
@@ -8,18 +9,18 @@ export function useMatchLogic() {
     text: inputText1,
     setText: setInputText1,
     jsonOutput: jsonOutput1,
-  } = useInputWithFormat("match-logic-input-text1");
+  } = useInputWithFormat(`${RoutePath.MATCH_LOGIC}-input-text1`);
   const {
     text: inputText2,
     setText: setInputText2,
     jsonOutput: jsonOutput2,
-  } = useInputWithFormat("match-logic-input-text2");
+  } = useInputWithFormat(`${RoutePath.MATCH_LOGIC}-input-text2`);
   const [matchField1, setMatchField1, matchFieldDebounce1] = useStateDebounce(
-    "match-logic-match-field-text1",
+    `${RoutePath.MATCH_LOGIC}-match-field-text1`,
     "identificador"
   );
   const [matchField2, setMatchField2, matchFieldDebounce2] = useStateDebounce(
-    "match-logic-match-field-text2",
+    `${RoutePath.MATCH_LOGIC}-match-field-text2`,
     "id"
   );
   const [outputFormat, setOutputFormat] = useState("json");

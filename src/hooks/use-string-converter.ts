@@ -1,14 +1,15 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { RoutePath } from "@/utils/constants";
 import { convertToCustomCSV } from "@/utils/helpers";
 import { useMemo } from "react";
 
 export const useStringConverter = () => {
   const { text, setText, jsonOutput } = useInputWithFormat(
-    "string-converter-input-text1"
+    `${RoutePath.STRING_CONVERTER}-input-text1`
   );
   const [matchField, setMatchField, matchFieldDebounce] = useStateDebounce(
-    "string-converter-match-field-text1",
+    `${RoutePath.STRING_CONVERTER}-match-field-text1`,
     "identificador"
   );
 

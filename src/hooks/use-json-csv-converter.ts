@@ -1,14 +1,15 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { RoutePath } from "@/utils/constants";
 import { convertToFormat } from "@/utils/helpers";
 import { useMemo } from "react";
 
 export const useJsonCsvConverter = () => {
   const { text, setText, jsonOutput } = useInputWithFormat(
-    "json-csv-converter-input-text"
+    `${RoutePath.JSON_CSV_CONVERTER}-input-text`
   );
   const [outputFormat, setOutputFormat, outputFormatDebounce] =
-    useStateDebounce("json-csv-converter-output-format", "json");
+    useStateDebounce(`${RoutePath.JSON_CSV_CONVERTER}-output-format`, "json");
 
   const formattedOutput = useMemo(
     () => convertToFormat(jsonOutput, outputFormatDebounce),
