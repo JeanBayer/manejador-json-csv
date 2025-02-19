@@ -2,7 +2,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useState } from "react";
 
 export const useStateDebounce = (
-  key: string,
+  _key: string,
   initialValue = "",
   duration = 500
 ) => {
