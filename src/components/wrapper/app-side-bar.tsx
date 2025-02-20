@@ -7,6 +7,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useKeyPress } from "@/hooks/use-key-press";
+import { RoutePath } from "@/utils/constants";
 import { useClickAway } from "@uidotdev/usehooks";
 import { GalleryVerticalEnd } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -22,10 +23,14 @@ interface AppSidebarProps {
 }
 
 const navItems: NavItem[] = [
-  { title: "Match logic", url: "/match-logic" },
-  { title: "String converter", url: "/string-converter" },
-  { title: "JSON/CSV Converter", url: "/json-csv-converter" },
-  { title: "Duplicate Marker", url: "/duplicate-marker" }, // Agrega el nuevo ítem de navegación
+  { title: "Match logic", url: `/${RoutePath.MATCH_LOGIC}` },
+  { title: "String converter", url: `/${RoutePath.STRING_CONVERTER}` },
+  { title: "JSON/CSV Converter", url: `/${RoutePath.JSON_CSV_CONVERTER}` },
+  { title: "Duplicate Marker", url: `/${RoutePath.DUPLICATE_MARKER}` },
+  {
+    title: "Duplicate Complex Marker",
+    url: `/${RoutePath.DUPLICATE_COMPLEX_MARKER}`,
+  },
 ];
 
 export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {

@@ -1,4 +1,5 @@
 import { Layout } from "@/layout";
+import { DuplicateComplexMarkerPage } from "@/pages/duplicate-complex-marker-page/page";
 import { DuplicateMarkerPage } from "@/pages/duplicate-marker-page/page"; // Importa la nueva página
 import { JsonCsvConverterPage } from "@/pages/json-csv-converter-page/page";
 import { MatchLogicPage } from "@/pages/match-logic/page";
@@ -23,6 +24,10 @@ export const Router = () => {
           <Route
             path={RoutePath.DUPLICATE_MARKER}
             element={<DuplicateMarkerPage />}
+          />
+          <Route
+            path={RoutePath.DUPLICATE_COMPLEX_MARKER}
+            element={<DuplicateComplexMarkerPage />}
           />
         </Route>
       </Routes>

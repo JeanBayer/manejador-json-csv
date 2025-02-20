@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const matchData = (
   json1: Record<string, unknown>[],
   matchField1: string,
@@ -92,7 +93,6 @@ export const parseStringToJson = (
   return data;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const markDuplicates = (data: any[] | null, field: string) => {
   if (!data?.length) return [];
 
@@ -108,4 +108,157 @@ export const markDuplicates = (data: any[] | null, field: string) => {
     ...item,
     duplicate: fieldCounts[item[field]] > 1,
   }));
+};
+
+export const calculateLastState = (data: any[] | null) => {
+  return data?.map((item) => {
+    console.log(item);
+    // Obtener el último movimiento
+    const ultimoMovimiento = item.movimientos[item.movimientos.length - 1];
+
+    delete item?.movimientos;
+
+    // Retornar el identificador y el estado del último movimiento
+    return {
+      ...item,
+      estado: ultimoMovimiento?.estado,
+      eliminar: false,
+      reglaEliminacion: "NO-APLICA",
+    };
+  });
+};
+
+export const groupByField = (data: any[] | null | undefined, field: string) => {
+  return data?.reduce((acumulador, movimiento) => {
+    const campo = movimiento[field];
+
+    // Si no existe la key en el acumulador, la inicializamos como array
+    if (!acumulador[campo]) {
+      acumulador[campo] = [];
+    }
+
+    // Agregamos el movimiento al array correspondiente a su identificador
+    acumulador[campo].push(movimiento);
+
+    return acumulador;
+  }, {});
+};
+
+type Regla = (mov1: Record<string, any>, mov2: Record<string, any>) => void;
+
+const REGLAS: Record<string, Regla> = {
+  "RECHAZADO-PENDIENTE": (
+    mov1: Record<string, any>,
+    mov2: Record<string, any>
+  ) => {
+    if (mov1.estado === "PENDIENTE") {
+      mov1.eliminar = true;
+      mov2.eliminar = false;
+    } else {
+      mov2.eliminar = true;
+      mov1.eliminar = false;
+    }
+
+    mov1.reglaEliminacion = "RECHAZADO-PENDIENTE";
+    mov2.reglaEliminacion = "RECHAZADO-PENDIENTE";
+  },
+  "ABONADO-PENDIENTE": (
+    mov1: Record<string, any>,
+    mov2: Record<string, any>
+  ) => {
+    if (mov1.estado === "PENDIENTE") {
+      mov1.eliminar = true;
+      mov2.eliminar = false;
+    } else {
+      mov2.eliminar = true;
+      mov1.eliminar = false;
+    }
+
+    mov1.reglaEliminacion = "ABONADO-PENDIENTE";
+    mov2.reglaEliminacion = "ABONADO-PENDIENTE";
+  },
+  "RECHAZADO-RECHAZADO": (
+    mov1: Record<string, any>,
+    mov2: Record<string, any>
+  ) => {
+    if (mov1.notificacion === false && mov2.notificacion !== false) {
+      mov1.eliminar = true;
+      mov2.eliminar = false;
+    } else if (mov2.notificacion === false && mov1.notificacion !== false) {
+      mov2.eliminar = true;
+      mov1.eliminar = false;
+    } else {
+      mov1.eliminar = false;
+      mov2.eliminar = true;
+    }
+
+    mov1.reglaEliminacion = "RECHAZADO-RECHAZADO";
+    mov2.reglaEliminacion = "RECHAZADO-RECHAZADO";
+  },
+  "PENDIENTE-PENDIENTE": (
+    mov1: Record<string, any>,
+    mov2: Record<string, any>
+  ) => {
+    if (mov1.notificacion === false && mov2.notificacion !== false) {
+      mov1.eliminar = true;
+      mov2.eliminar = false;
+    } else if (mov2.notificacion === false && mov1.notificacion !== false) {
+      mov2.eliminar = true;
+      mov1.eliminar = false;
+    } else {
+      mov1.eliminar = false;
+      mov2.eliminar = true;
+    }
+
+    mov1.reglaEliminacion = "PENDIENTE-PENDIENTE";
+    mov2.reglaEliminacion = "PENDIENTE-PENDIENTE";
+  },
+};
+
+const applyRuleMovementDuplicate = (
+  mov1: Record<string, any>,
+  mov2: Record<string, any>
+) => {
+  const key = `${mov1.estado}-${mov2.estado}`;
+  const reverseKey = `${mov2.estado}-${mov1.estado}`;
+  if (REGLAS[key]) {
+    REGLAS[key](mov1, mov2);
+  } else if (REGLAS[reverseKey]) {
+    REGLAS[reverseKey](mov1, mov2);
+  } else {
+    mov1.eliminar = false;
+    mov2.eliminar = false;
+    mov1.reglaEliminacion = "NO-CONOCIDA";
+    mov2.reglaEliminacion = "NO-CONOCIDA";
+  }
+};
+
+const manageDuplicateMovements = (movements: Record<string, any[]> | null) => {
+  if (!movements) return [];
+
+  Object.keys(movements).forEach((key) => {
+    const grupo = movements[key];
+
+    if (grupo.length === 2) {
+      const [mov1, mov2] = grupo;
+      applyRuleMovementDuplicate(mov1, mov2);
+    } else {
+      grupo.forEach((mov) => (mov.eliminar = false));
+    }
+  });
+
+  return Object.values(movements).flat();
+};
+
+export const markComplexDuplicates = (data: any[] | null, field: string) => {
+  try {
+    if (!data?.length) return [];
+    const dataDuplicate = markDuplicates(data, field);
+    const dataWithLastState = calculateLastState(dataDuplicate);
+    const dataGrouped = groupByField(dataWithLastState, field);
+    return manageDuplicateMovements(dataGrouped);
+  } catch (error) {
+    console.error("Error al marcar duplicados complejos", error);
+    return [];
+  }
 };
