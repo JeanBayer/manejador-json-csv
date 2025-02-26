@@ -3,6 +3,7 @@ import { DuplicateComplexMarkerPage } from "@/pages/duplicate-complex-marker-pag
 import { DuplicateMarkerPage } from "@/pages/duplicate-marker-page/page"; // Importa la nueva página
 import { JsonCsvConverterPage } from "@/pages/json-csv-converter-page/page";
 import { MatchLogicPage } from "@/pages/match-logic/page";
+import { PruebaPage } from "@/pages/prueba/page";
 import { StringConverterPage } from "@/pages/string-converter/page";
 import { RoutePath } from "@/utils/constants";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -29,6 +30,7 @@ export const Router = () => {
             path={RoutePath.DUPLICATE_COMPLEX_MARKER}
             element={<DuplicateComplexMarkerPage />}
           />
+          <Route path={RoutePath.PRUEBA} element={<PruebaPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

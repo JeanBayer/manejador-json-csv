@@ -4,4 +4,5 @@ export const RoutePath = {
   JSON_CSV_CONVERTER: "json-csv-converter",
   DUPLICATE_MARKER: "duplicate-marker",
   DUPLICATE_COMPLEX_MARKER: "duplicate-complex-marker",
+  PRUEBA: "prueba",
 } as const;

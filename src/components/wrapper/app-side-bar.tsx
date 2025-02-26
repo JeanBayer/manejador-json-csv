@@ -31,6 +31,10 @@ const navItems: NavItem[] = [
     title: "Duplicate Complex Marker",
     url: `/${RoutePath.DUPLICATE_COMPLEX_MARKER}`,
   },
+  {
+    title: "Prueba",
+    url: `/${RoutePath.PRUEBA}`,
+  },
 ];
 
 export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
