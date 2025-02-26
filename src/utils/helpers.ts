@@ -1,22 +1,74 @@
+import { ComplexDuplicateOutput, OutPutItemJSON } from "@/types/output";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const matchData = (
-  json1: Record<string, unknown>[],
+
+export const matchData = <T>(
+  json1: OutPutItemJSON[] | null,
   matchField1: string,
-  json2: Record<string, unknown>[],
+  json2: OutPutItemJSON[] | null,
   matchField2: string
-) => {
+): OutPutItemJSON<T>[] => {
+  if (!json1?.length || !json2?.length) return [];
+
   return json1.map((entry) => {
-    const matchFound = json2.some(
+    const matchFound = json2.find(
       (item) => item[matchField2] === entry[matchField1]
     );
+
+    // const matchFound = json2.filter(
+    //   (item) => item[matchField2] === entry[matchField1]
+    // );
+
+    // let returnMatchData = {};
+    // if (matchFound.length > 1) {
+    //   returnMatchData = {
+    //     identificadorRetiro1: matchFound[0]?.id || "N/A",
+    //     identificadorRetiro2: matchFound[1]?.id || "N/A",
+    //     estadoRetiro1: matchFound[0]?.estadoRetiro || "N/A",
+    //     estadoRetiro2: matchFound[1]?.estadoRetiro || "N/A",
+    //     estadoItemRetiro1: matchFound[0]?.estado || "N/A",
+    //     estadoItemRetiro2: matchFound[1]?.estado || "N/A",
+    //     cantidadTrxRetiro1: matchFound[0]?.cantidadTransacciones || "N/A",
+    //     cantidadTrxRetiro2: matchFound[1]?.cantidadTransacciones || "N/A",
+    //     fechaCreacionRetiro1: matchFound[0]?.fechaHoraRegistro || "N/A",
+    //     fechaCreacionRetiro2: matchFound[1]?.fechaHoraRegistro || "N/A",
+    //     rutRetiro1: matchFound[0]?.rut || "N/A",
+    //     rutRetiro2: matchFound[1]?.rut || "N/A",
+    //     match: true,
+    //   };
+    // } else {
+    //   returnMatchData = {
+    //     identificadorRetiro1: matchFound[0]?.id || "N/A",
+    //     identificadorRetiro2: "N/A",
+    //     estadoRetiro1: matchFound[0]?.estadoRetiro || "N/A",
+    //     estadoRetiro2: "N/A",
+    //     estadoItemRetiro1: matchFound[0]?.estado || "N/A",
+    //     estadoItemRetiro2: "N/A",
+    //     cantidadTrxRetiro1: matchFound[0]?.cantidadTransacciones || "N/A",
+    //     cantidadTrxRetiro2: "N/A",
+    //     fechaCreacionRetiro1: matchFound[0]?.fechaHoraRegistro || "N/A",
+    //     fechaCreacionRetiro2: "N/A",
+    //     rutRetiro1: matchFound[0]?.rut || "N/A",
+    //     rutRetiro2: "N/A",
+    //     match: matchFound.length > 0,
+    //   };
+    // }
+    // return {
+    //   ...entry,
+    //   ...returnMatchData,
+    // };
+
     return {
       ...entry,
-      match: matchFound,
-    };
+      // estadoItemRetiro: matchFound?.estado || "N/A",
+      // fechaCreacionRetiro: matchFound?.fechaHoraRegistro || "N/A",
+      // montoCashback: matchFound?.monto || "N/A",
+      match: !!matchFound,
+    } as unknown as OutPutItemJSON<T>;
   });
 };
 
-export const convertToCSV = (data: Record<string, unknown>[]) => {
+export const convertToCSV = (data: OutPutItemJSON[]) => {
   if (data?.length === 0) return "";
 
   const headers = Object.keys(data[0]);
@@ -27,8 +79,8 @@ export const convertToCSV = (data: Record<string, unknown>[]) => {
   return [headers.join(","), ...csvRows].join("\n");
 };
 
-export const convertToFormat = (
-  data: Record<string, unknown>[] | null,
+export const convertToFormat = <T>(
+  data: OutPutItemJSON<T>[] | null,
   format: string
 ) => {
   if (!data?.length) return "";
@@ -37,7 +89,7 @@ export const convertToFormat = (
 };
 
 export const convertToCustomCSV = (
-  data: Record<string, unknown>[] | null,
+  data: OutPutItemJSON[] | null,
   matchField: string
 ) => {
   if (!data?.length) return "";
@@ -54,9 +106,7 @@ export const convertToCustomCSV = (
   return `${result}`;
 };
 
-export const parseStringToJson = (
-  input: string
-): Record<string, string>[] | null => {
+export const parseStringToJson = (input: string): OutPutItemJSON[] | null => {
   input = input.trim();
 
   // Intentar parsear como JSON directamente
@@ -93,38 +143,48 @@ export const parseStringToJson = (
   return data;
 };
 
-export const markDuplicates = (data: any[] | null, field: string) => {
+export const markDuplicates = <T>(
+  data: OutPutItemJSON[] | null,
+  field: string
+): OutPutItemJSON<T>[] => {
   if (!data?.length) return [];
 
-  const fieldCounts = data.reduce((acc, item) => {
-    const fieldValue = item[field];
-    if (fieldValue) {
-      acc[fieldValue] = (acc[fieldValue] || 0) + 1;
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  return data?.map((movimiento) => {
+    const fieldMovimiento = movimiento[field];
+    const duplicate =
+      data?.filter((movimiento) => movimiento[field] === fieldMovimiento)
+        .length > 1;
 
-  return data.map((item) => ({
-    ...item,
-    duplicate: fieldCounts[item[field]] > 1,
-  }));
+    return {
+      ...movimiento,
+      duplicate,
+    } as unknown as OutPutItemJSON<T>;
+  });
 };
 
-export const calculateLastState = (data: any[] | null) => {
+export const calculateLastState = <T>(
+  data: OutPutItemJSON<T>[] | null
+): OutPutItemJSON<ComplexDuplicateOutput>[] => {
+  if (!data?.length) return [];
+
   return data?.map((item) => {
-    console.log(item);
-    // Obtener el último movimiento
-    const ultimoMovimiento = item.movimientos[item.movimientos.length - 1];
+    if (!Array.isArray(item.movimientos))
+      throw new Error("El campo 'movimientos' no es un array");
+
+    const itemLength = item?.movimientos?.length || 0;
+    const ultimoMovimiento = item.movimientos[itemLength - 1];
 
     delete item?.movimientos;
 
-    // Retornar el identificador y el estado del último movimiento
+    if (typeof ultimoMovimiento !== "object" || !ultimoMovimiento?.estado)
+      throw new Error("El campo 'estado' no existe en el movimiento");
+
     return {
       ...item,
       estado: ultimoMovimiento?.estado,
       eliminar: false,
       reglaEliminacion: "NO-APLICA",
-    };
+    } as unknown as OutPutItemJSON<ComplexDuplicateOutput>;
   });
 };
 
@@ -250,7 +310,10 @@ const manageDuplicateMovements = (movements: Record<string, any[]> | null) => {
   return Object.values(movements).flat();
 };
 
-export const markComplexDuplicates = (data: any[] | null, field: string) => {
+export const markComplexDuplicates = <T>(
+  data: OutPutItemJSON[] | null,
+  field: string
+): OutPutItemJSON<T>[] => {
   try {
     if (!data?.length) return [];
     const dataDuplicate = markDuplicates(data, field);

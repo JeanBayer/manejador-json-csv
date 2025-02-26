@@ -1,5 +1,6 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { DuplicateOutput } from "@/types/output";
 import { RoutePath } from "@/utils/constants";
 import { convertToFormat, markDuplicates } from "@/utils/helpers";
 import { useMemo } from "react";
@@ -16,7 +17,7 @@ export const useDuplicateMarker = () => {
     useStateDebounce(`${RoutePath.DUPLICATE_MARKER}-output-format`, "json");
 
   const markedData = useMemo(
-    () => markDuplicates(jsonOutput, matchFieldDebounce),
+    () => markDuplicates<DuplicateOutput>(jsonOutput, matchFieldDebounce),
     [jsonOutput, matchFieldDebounce]
   );
 

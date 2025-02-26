@@ -13,8 +13,8 @@ export function useCopyToClipboard() {
         title: "Copied!",
         description: "The content has been copied to the clipboard.",
       });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.error("Failed to copy!", error);
       setCopySuccess("Failed to copy!");
       toast({
         title: "Failed to copy!",

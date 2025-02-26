@@ -1,5 +1,6 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { MatchOuput, OutPutItemJSON } from "@/types/output";
 import { RoutePath } from "@/utils/constants";
 import { convertToFormat, matchData } from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
@@ -25,20 +26,19 @@ export function useMatchLogic() {
   );
   const [outputFormat, setOutputFormat] = useState("json");
 
-  const [matchedData, setMatchedData] = useState<{ match: boolean }[]>([]);
+  const [matchedData, setMatchedData] = useState<OutPutItemJSON<MatchOuput>[]>(
+    []
+  );
 
   useEffect(() => {
-    if (jsonOutput1?.length && jsonOutput2?.length)
-      return setMatchedData(
-        matchData(
-          jsonOutput1,
-          matchFieldDebounce1,
-          jsonOutput2,
-          matchFieldDebounce2
-        )
-      );
-
-    setMatchedData([]);
+    setMatchedData(
+      matchData<MatchOuput>(
+        jsonOutput1,
+        matchFieldDebounce1,
+        jsonOutput2,
+        matchFieldDebounce2
+      )
+    );
   }, [matchFieldDebounce1, matchFieldDebounce2, jsonOutput1, jsonOutput2]);
 
   const formattedOutput = useMemo(
@@ -46,8 +46,8 @@ export function useMatchLogic() {
     [matchedData, outputFormat]
   );
 
-  const totalRows = matchedData.length;
-  const matchedRows = matchedData.filter((item) => item.match).length;
+  const totalRows = matchedData?.length;
+  const matchedRows = matchedData?.filter((item) => item?.match).length;
 
   return {
     inputText1,

@@ -1,5 +1,6 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { DuplicateOutput } from "@/types/output";
 import { RoutePath } from "@/utils/constants";
 import { convertToFormat, markComplexDuplicates } from "@/utils/helpers";
 import { useMemo } from "react";
@@ -19,7 +20,8 @@ export const useDuplicateComplexMarker = () => {
     );
 
   const markedData = useMemo(
-    () => markComplexDuplicates(jsonOutput, matchFieldDebounce),
+    () =>
+      markComplexDuplicates<DuplicateOutput>(jsonOutput, matchFieldDebounce),
     [jsonOutput, matchFieldDebounce]
   );
 
