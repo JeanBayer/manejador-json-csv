@@ -1,11 +1,16 @@
 import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
+import { CheckBoxData } from "@/types/checkbox";
 import { MatchOuput, OutPutItemJSON } from "@/types/output";
 import { RoutePath } from "@/utils/constants";
-import { convertToFormat, matchData } from "@/utils/helpers";
+import { convertToFormat, getMaxKeysItem, matchData } from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
 
-export function useMatchLogic() {
+type MatchLogicProps = {
+  selectedValues: string[];
+};
+
+export function useMatchLogic({ selectedValues = [] }: MatchLogicProps) {
   const {
     text: inputText1,
     setText: setInputText1,
@@ -22,7 +27,7 @@ export function useMatchLogic() {
   );
   const [matchField2, setMatchField2, matchFieldDebounce2] = useStateDebounce(
     `${RoutePath.MATCH_LOGIC}-match-field-text2`,
-    "id"
+    "identificador"
   );
   const [outputFormat, setOutputFormat] = useState("json");
 
@@ -36,10 +41,25 @@ export function useMatchLogic() {
         jsonOutput1,
         matchFieldDebounce1,
         jsonOutput2,
-        matchFieldDebounce2
+        matchFieldDebounce2,
+        selectedValues
       )
     );
-  }, [matchFieldDebounce1, matchFieldDebounce2, jsonOutput1, jsonOutput2]);
+  }, [
+    matchFieldDebounce1,
+    matchFieldDebounce2,
+    jsonOutput1,
+    jsonOutput2,
+    selectedValues,
+  ]);
+
+  const keys = useMemo(() => {
+    const keys = getMaxKeysItem(jsonOutput2 || []);
+    return keys.map((key) => ({
+      value: key,
+      label: key,
+    })) as CheckBoxData[];
+  }, [jsonOutput2]);
 
   const formattedOutput = useMemo(
     () => convertToFormat(matchedData, outputFormat),
@@ -63,5 +83,6 @@ export function useMatchLogic() {
     formattedOutput,
     totalRows,
     matchedRows,
+    keys,
   };
 }

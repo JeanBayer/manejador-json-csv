@@ -1,9 +1,12 @@
+import { CheckBox } from "@/components/wrapper/checkbox";
 import { InputBlock } from "@/components/wrapper/input-block";
 import { OutputBlock } from "@/components/wrapper/output-block";
 import { TitlePage } from "@/components/wrapper/title-page";
+import { useCheckBox } from "@/hooks/use-check-box";
 import { useMatchLogic } from "@/hooks/use-match-logic";
 
 export const MatchLogicPage = () => {
+  const { selectedValues, ...restCheckBox } = useCheckBox();
   const {
     inputText1,
     setInputText1,
@@ -18,7 +21,10 @@ export const MatchLogicPage = () => {
     formattedOutput,
     totalRows,
     matchedRows,
-  } = useMatchLogic();
+    keys,
+  } = useMatchLogic({
+    selectedValues,
+  });
 
   return (
     <section>
@@ -39,6 +45,14 @@ export const MatchLogicPage = () => {
             setValueMatch={setMatchField2}
             text={inputText2}
             setText={setInputText2}
+            extendedInput={
+              <CheckBox
+                data={keys}
+                selectedValues={selectedValues}
+                title="Join Fields"
+                {...restCheckBox}
+              />
+            }
           />
         </div>
         <OutputBlock

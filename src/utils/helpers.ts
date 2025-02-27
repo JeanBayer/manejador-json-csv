@@ -3,77 +3,60 @@ import { ComplexDuplicateOutput, OutPutItemJSON } from "@/types/output";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const matchData = <T>(
-  json1: OutPutItemJSON[] | null,
-  matchField1: string,
-  json2: OutPutItemJSON[] | null,
-  matchField2: string
+  json1: OutPutItemJSON[] | null = [],
+  matchField1: string = "",
+  json2: OutPutItemJSON[] | null = [],
+  matchField2: string = "",
+  joinKeys: string[] = []
 ): OutPutItemJSON<T>[] => {
   if (!json1?.length || !json2?.length) return [];
 
   return json1.map((entry) => {
-    const matchFound = json2.find(
+    const matchsFound = json2?.filter(
       (item) => item[matchField2] === entry[matchField1]
     );
 
-    // const matchFound = json2.filter(
-    //   (item) => item[matchField2] === entry[matchField1]
-    // );
-
-    // let returnMatchData = {};
-    // if (matchFound.length > 1) {
-    //   returnMatchData = {
-    //     identificadorRetiro1: matchFound[0]?.id || "N/A",
-    //     identificadorRetiro2: matchFound[1]?.id || "N/A",
-    //     estadoRetiro1: matchFound[0]?.estadoRetiro || "N/A",
-    //     estadoRetiro2: matchFound[1]?.estadoRetiro || "N/A",
-    //     estadoItemRetiro1: matchFound[0]?.estado || "N/A",
-    //     estadoItemRetiro2: matchFound[1]?.estado || "N/A",
-    //     cantidadTrxRetiro1: matchFound[0]?.cantidadTransacciones || "N/A",
-    //     cantidadTrxRetiro2: matchFound[1]?.cantidadTransacciones || "N/A",
-    //     fechaCreacionRetiro1: matchFound[0]?.fechaHoraRegistro || "N/A",
-    //     fechaCreacionRetiro2: matchFound[1]?.fechaHoraRegistro || "N/A",
-    //     rutRetiro1: matchFound[0]?.rut || "N/A",
-    //     rutRetiro2: matchFound[1]?.rut || "N/A",
-    //     match: true,
-    //   };
-    // } else {
-    //   returnMatchData = {
-    //     identificadorRetiro1: matchFound[0]?.id || "N/A",
-    //     identificadorRetiro2: "N/A",
-    //     estadoRetiro1: matchFound[0]?.estadoRetiro || "N/A",
-    //     estadoRetiro2: "N/A",
-    //     estadoItemRetiro1: matchFound[0]?.estado || "N/A",
-    //     estadoItemRetiro2: "N/A",
-    //     cantidadTrxRetiro1: matchFound[0]?.cantidadTransacciones || "N/A",
-    //     cantidadTrxRetiro2: "N/A",
-    //     fechaCreacionRetiro1: matchFound[0]?.fechaHoraRegistro || "N/A",
-    //     fechaCreacionRetiro2: "N/A",
-    //     rutRetiro1: matchFound[0]?.rut || "N/A",
-    //     rutRetiro2: "N/A",
-    //     match: matchFound.length > 0,
-    //   };
-    // }
-    // return {
-    //   ...entry,
-    //   ...returnMatchData,
-    // };
+    const joinKeysMatch: any = {};
+    let iteraror = 1;
+    for (const matchFound of matchsFound) {
+      for (const key of joinKeys) {
+        if (!matchFound[key]) continue;
+        joinKeysMatch[`${key}-${iteraror}`] = matchFound[key] || "N/A";
+      }
+      iteraror++;
+    }
 
     return {
       ...entry,
-      // estadoItemRetiro: matchFound?.estado || "N/A",
-      // fechaCreacionRetiro: matchFound?.fechaHoraRegistro || "N/A",
-      // montoCashback: matchFound?.monto || "N/A",
-      match: !!matchFound,
+      ...joinKeysMatch,
+      quantityMatch: matchsFound.length,
+      match: matchsFound.length > 0,
     } as unknown as OutPutItemJSON<T>;
   });
+};
+
+export const getMaxKeysItem = (data: any[]) => {
+  if (!data?.length) return [];
+
+  return data.reduce<string[]>((acc, item) => {
+    const keys = Object.keys(item);
+    const keysUnique = new Set([...acc, ...keys]);
+    return Array.from(keysUnique);
+  }, []);
 };
 
 export const convertToCSV = (data: OutPutItemJSON[]) => {
   if (data?.length === 0) return "";
 
-  const headers = Object.keys(data[0]);
+  const headers = getMaxKeysItem(data);
+
   const csvRows = data.map((row) =>
-    headers.map((header) => row[header]).join(",")
+    headers
+      .map((header) => {
+        const value = row[header];
+        return value === undefined || value === null ? "N/A" : value;
+      })
+      .join(",")
   );
 
   return [headers.join(","), ...csvRows].join("\n");
