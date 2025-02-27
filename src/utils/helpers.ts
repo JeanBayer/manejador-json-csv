@@ -62,12 +62,30 @@ export const convertToCSV = (data: OutPutItemJSON[]) => {
   return [headers.join(","), ...csvRows].join("\n");
 };
 
+export const convertToSSV = (data: OutPutItemJSON[]) => {
+  if (data?.length === 0) return "";
+
+  const headers = getMaxKeysItem(data);
+
+  const csvRows = data.map((row) =>
+    headers
+      .map((header) => {
+        const value = row[header];
+        return value === undefined || value === null ? "N/A" : value;
+      })
+      .join(";")
+  );
+
+  return [headers.join(";"), ...csvRows].join("\n");
+};
+
 export const convertToFormat = <T>(
   data: OutPutItemJSON<T>[] | null,
   format: string
 ) => {
   if (!data?.length) return "";
   if (format === "csv") return convertToCSV(data);
+  if (format === "ssv") return convertToSSV(data);
   return JSON.stringify(data, null, 2);
 };
 

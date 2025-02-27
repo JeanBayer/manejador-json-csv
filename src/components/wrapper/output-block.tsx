@@ -26,6 +26,7 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
           items={[
             { value: "json", label: "JSON" },
             { value: "csv", label: "CSV" },
+            { value: "ssv", label: "SSV" },
           ]}
           className="max-w-64"
         />

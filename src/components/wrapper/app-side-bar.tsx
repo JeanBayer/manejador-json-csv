@@ -43,7 +43,8 @@ export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
     setIsOpen(false);
   });
 
-  useKeyPress("Escape", () => setIsOpen(!isOpen));
+  useKeyPress("Control", () => setIsOpen(!isOpen));
+  useKeyPress("Escape", () => setIsOpen(false));
 
   return (
     <Sidebar
