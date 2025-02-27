@@ -6,13 +6,17 @@ import { MatchLogicPage } from "@/pages/match-logic/page";
 import { PruebaPage } from "@/pages/prueba/page";
 import { StringConverterPage } from "@/pages/string-converter/page";
 import { RoutePath } from "@/utils/constants";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={<Navigate to={RoutePath.JSON_CSV_CONVERTER} replace />}
+          />
           <Route
             path={RoutePath.STRING_CONVERTER}
             element={<StringConverterPage />}
