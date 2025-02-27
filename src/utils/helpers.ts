@@ -20,8 +20,8 @@ export const matchData = <T>(
     let iteraror = 1;
     for (const matchFound of matchsFound) {
       for (const key of joinKeys) {
-        if (!matchFound[key]) continue;
-        joinKeysMatch[`${key}-${iteraror}`] = matchFound[key] || "N/A";
+        if (matchFound[key] === null || matchFound[key] === undefined) continue;
+        joinKeysMatch[`${key}-${iteraror}`] = matchFound[key];
       }
       iteraror++;
     }
