@@ -14,10 +14,6 @@ export const Router = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route
-            index
-            element={<Navigate to={RoutePath.JSON_CSV_CONVERTER} replace />}
-          />
-          <Route
             path={RoutePath.STRING_CONVERTER}
             element={<StringConverterPage />}
           />
