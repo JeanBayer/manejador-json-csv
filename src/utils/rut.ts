@@ -1,10 +1,9 @@
 export const isRutValid = (rutCompleto: string) => {
   if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto)) return false;
 
-  const [rut, digv] = rutCompleto.toLowerCase().split("-");
-  const result = calculateDVRut(Number.parseInt(rut)).toString();
-  console.log(result, digv);
-  return result === digv;
+  const [rut, inputDV] = rutCompleto.toLowerCase().split("-");
+  const realDV = calculateDVRut(Number.parseInt(rut)).toString();
+  return realDV === inputDV;
 };
 
 const calculateDVRut = (T: number) => {
