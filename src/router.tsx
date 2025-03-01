@@ -1,6 +1,7 @@
 import { Layout } from "@/layout";
 import { DuplicateComplexMarkerPage } from "@/pages/duplicate-complex-marker-page/page";
-import { DuplicateMarkerPage } from "@/pages/duplicate-marker-page/page"; // Importa la nueva página
+import { DuplicateMarkerPage } from "@/pages/duplicate-marker-page/page";
+import { FormatOthersCashbackPage } from "@/pages/format-others-cashback/page"; // Importa la nueva página
 import { JsonCsvConverterPage } from "@/pages/json-csv-converter-page/page";
 import { MatchLogicPage } from "@/pages/match-logic/page";
 import { PruebaPage } from "@/pages/prueba/page";
@@ -35,6 +36,10 @@ export const Router = () => {
             element={<DuplicateComplexMarkerPage />}
           />
           <Route path={RoutePath.PRUEBA} element={<PruebaPage />} />
+          <Route
+            path={RoutePath.FORMAT_OTHERS_CASHBACK}
+            element={<FormatOthersCashbackPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

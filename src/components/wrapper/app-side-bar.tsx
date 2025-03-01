@@ -7,35 +7,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useKeyPress } from "@/hooks/use-key-press";
-import { RoutePath } from "@/utils/constants";
+import { NavItems } from "@/utils/constants";
 import { useClickAway } from "@uidotdev/usehooks";
 import { GalleryVerticalEnd } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-
-interface NavItem {
-  title: string;
-  url: string;
-}
 
 interface AppSidebarProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
-
-const navItems: NavItem[] = [
-  { title: "Match logic", url: `/${RoutePath.MATCH_LOGIC}` },
-  { title: "String converter", url: `/${RoutePath.STRING_CONVERTER}` },
-  { title: "JSON/CSV Converter", url: `/${RoutePath.JSON_CSV_CONVERTER}` },
-  { title: "Duplicate Marker", url: `/${RoutePath.DUPLICATE_MARKER}` },
-  {
-    title: "Duplicate Complex Marker",
-    url: `/${RoutePath.DUPLICATE_COMPLEX_MARKER}`,
-  },
-  {
-    title: "Prueba",
-    url: `/${RoutePath.PRUEBA}`,
-  },
-];
 
 export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
   const location = useLocation();
@@ -68,7 +48,7 @@ export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {navItems.map((item) => (
+        {NavItems.map((item) => (
           <SidebarMenuItem
             key={item.title}
             className={`list-none transition-colors duration-200 ${
