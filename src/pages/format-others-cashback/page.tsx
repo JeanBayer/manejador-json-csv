@@ -37,7 +37,7 @@ export const FormatOthersCashbackPage = () => {
         title="Format Others Cashback"
         info="Input your data in the text area below to format others cashback."
       />
-      <div className="w-screen flex flex-col gap-8 px-16 py-4">
+      <div className="w-screen flex flex-col gap-8 px-16 md:px-32 lg:px-48 py-4 pb-16">
         <div className="flex w-full gap-16">
           <div className="flex flex-col flex-1 gap-4">
             <label className="block text-sm font-medium text-gray-700">
