@@ -19,7 +19,6 @@ interface InputCalendarProps {
 export const InputCalendar = ({
   selected,
   onSelect,
-  mode = "single",
   className,
 }: InputCalendarProps) => {
   return (
