@@ -223,6 +223,18 @@ export const markDuplicates = <T>(
   });
 };
 
+export const formatCurrencyLocale = (value: number) => {
+  return new Intl.NumberFormat("es-cl", {
+    style: "currency",
+    currency: "CLP",
+  }).format(value);
+};
+
+export const calculateUniqueData = (data: any[], field: string) => {
+  const itemsUniques = new Set(data.map((item) => item[field]));
+  return Array.from(itemsUniques).length;
+};
+
 export const calculateLastState = <T>(
   data: OutPutItemJSON<T>[] | null
 ): OutPutItemJSON<ComplexDuplicateOutput>[] => {

@@ -3,7 +3,11 @@ import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { useToast } from "@/hooks/use-toast";
 import { OutPutItemJSON } from "@/types/output";
 import { RoutePath } from "@/utils/constants";
-import { convertToFormat, convertToOtherCashbackFormat } from "@/utils/helpers";
+import {
+  calculateUniqueData,
+  convertToFormat,
+  convertToOtherCashbackFormat,
+} from "@/utils/helpers";
 import { useEffect, useMemo, useState } from "react";
 
 export const useOtherCashback = () => {
@@ -12,7 +16,10 @@ export const useOtherCashback = () => {
     text: inputRuts,
     setText: setInputRuts,
     jsonOutput: jsonOutputRuts,
-  } = useInputWithFormat(`${RoutePath.FORMAT_OTHERS_CASHBACK}-input-ruts`);
+  } = useInputWithFormat(
+    `${RoutePath.FORMAT_OTHERS_CASHBACK}-input-ruts`,
+    `rut\n25582817-7\n25582817-7\n19149040-1`
+  );
   const [date, setDate, dateDebounce] = useStateDebounce<Date | undefined>(
     `${RoutePath.FORMAT_OTHERS_CASHBACK}-date`,
     new Date()
@@ -28,7 +35,7 @@ export const useOtherCashback = () => {
     );
   const [idOferta, setIdOferta, idOfertaDebounce] = useStateDebounce(
     `${RoutePath.FORMAT_OTHERS_CASHBACK}-input-id-oferta`,
-    "123e4567-e89b-12d3-a456-426614174000"
+    "64ecf194e0f16cfa366e469d"
   );
   const [estadoOferta, setEstadoOferta, estadoOfertaDebounce] =
     useStateDebounce(
@@ -77,10 +84,16 @@ export const useOtherCashback = () => {
     toast,
   ]);
 
+  const infoData = useMemo(() => {
+    const montoTotal = matchedData?.length * Number(monto);
+    const rutsUnicos = calculateUniqueData(matchedData, "rutCliente");
+    const rutsTotales = matchedData?.length;
+    return { montoTotal, rutsUnicos, rutsTotales };
+  }, [matchedData, monto]);
+
   return {
     inputRuts,
     setInputRuts,
-    jsonOutputRuts,
     date,
     setDate,
     monto,
@@ -94,5 +107,6 @@ export const useOtherCashback = () => {
     outputFormat,
     setOutputFormat,
     formattedOutput,
+    ...infoData,
   };
 };

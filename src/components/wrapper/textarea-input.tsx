@@ -12,14 +12,14 @@ export const TextAreaInput = ({ text, setText }: TextAreaInputProps) => {
   };
 
   return (
-    <label className="block text-sm font-medium text-gray-700">
+    <label className="block text-sm font-medium text-gray-700 max-w-[640px]">
       Data Input JSON/CSV
-      <div className="relative">
+      <div className="relative max-w-[640px]">
         <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Pega aquí tus datos"
-          className="mt-1 block w-full h-[540px]"
+          className="mt-1 block w-full h-[540px] "
         />
         <Button
           onClick={handleClear}
