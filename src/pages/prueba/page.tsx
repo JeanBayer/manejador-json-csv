@@ -1,5 +1,7 @@
 import { CheckBox } from "@/components/wrapper/checkbox";
+import { DateTimePicker } from "@/components/wrapper/date-time-picker";
 import { useCheckBox } from "@/hooks/use-check-box";
+import { useState } from "react";
 
 const data = [
   {
@@ -26,8 +28,11 @@ const data = [
 
 export const PruebaPage = () => {
   const { selectedValues, ...rest } = useCheckBox();
+  const [date, setDate] = useState<Date | undefined>(new Date());
+
   return (
     <div>
+      <DateTimePicker date={date} setDate={setDate} />
       <CheckBox data={data} selectedValues={selectedValues} {...rest} />
     </div>
   );

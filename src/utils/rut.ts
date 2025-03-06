@@ -1,9 +1,19 @@
-export const isRutValid = (rutCompleto: string) => {
+export const isRutValid = (rutCompleto: string | undefined | null) => {
+  if (!rutCompleto) return false;
   if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto)) return false;
 
   const [rut, inputDV] = rutCompleto.toLowerCase().split("-");
   const realDV = calculateDVRut(Number.parseInt(rut)).toString();
   return realDV === inputDV;
+};
+
+export const extractRut = (
+  rutCompleto: string | undefined | null
+): string[] => {
+  if (!rutCompleto) throw new Error("Rut inválido");
+  if (!isRutValid(rutCompleto)) throw new Error("Rut inválido");
+
+  return rutCompleto?.split("-");
 };
 
 const calculateDVRut = (T: number) => {

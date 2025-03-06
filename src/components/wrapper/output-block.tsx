@@ -5,8 +5,8 @@ interface OutputBlockProps {
   outputFormat: string;
   setOutputFormat: (value: string) => void;
   output: string;
-  totalRows: number;
-  matchedRows: number;
+  totalRows?: number;
+  matchedRows?: number;
 }
 
 export const OutputBlock: React.FC<OutputBlockProps> = ({
@@ -32,9 +32,11 @@ export const OutputBlock: React.FC<OutputBlockProps> = ({
         />
       </label>
       <TextAreaOutput value={output} />
-      <div className="text-sm text-muted-foreground text-right">
-        Total Rows/Objects: {totalRows}, Matched: {matchedRows}
-      </div>
+      {Number.isInteger(totalRows) && Number.isInteger(matchedRows) && (
+        <div className="text-sm text-muted-foreground text-right">
+          Total Rows/Objects: {totalRows}, Matched: {matchedRows}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,9 @@
 import { ComplexDuplicateOutput, OutPutItemJSON } from "@/types/output";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import { v4 as uuidv4 } from "uuid";
+import { FormatDate } from "./constants";
+import { extractRut, isRutValid } from "./rut";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -31,6 +36,61 @@ export const matchData = <T>(
       ...joinKeysMatch,
       quantityMatch: matchsFound.length,
       match: matchsFound.length > 0,
+    } as unknown as OutPutItemJSON<T>;
+  });
+};
+
+export const convertToOtherCashbackFormat = <T>(
+  ruts: OutPutItemJSON[] | null = [],
+  date: Date | undefined,
+  monto: string,
+  tituloOferta: string,
+  idOferta: string,
+  estadoOferta: string
+): OutPutItemJSON<T>[] => {
+  if (!ruts?.length) throw new Error("No hay ruts");
+
+  const montoNumber = Number.parseFloat(monto);
+  if (montoNumber <= 0) throw new Error("Monto invalido");
+
+  if (!date) throw new Error("Fecha invalida");
+  const dateFormat = format(date, FormatDate, { locale: es });
+
+  const tituloOfertaString = tituloOferta.trim();
+  if (!tituloOfertaString || tituloOfertaString.length <= 0)
+    throw new Error("Titulo invalido");
+
+  const idOfertaString = idOferta.trim();
+  if (!idOfertaString || idOfertaString.length <= 0)
+    throw new Error("Id invalido");
+
+  const estadoOfertaString = estadoOferta.trim();
+  if (!estadoOfertaString || estadoOfertaString.length <= 0)
+    throw new Error("Estado invalido");
+
+  // paso 1 validar que todos los ruts son validos
+  const haveInvalidRut =
+    ruts.filter((item) => !isRutValid(String(item.rut))).length > 0;
+  if (haveInvalidRut) throw new Error("Rut invalido");
+
+  return ruts?.map((item) => {
+    const [rutCliente, dv] = extractRut(String(item.rut));
+    const fechaTransaccion = dateFormat;
+    const montoCashback = montoNumber;
+    const titulo = tituloOfertaString;
+    const idOferta = idOfertaString;
+    const idTransaccion = uuidv4();
+    const estado = estadoOfertaString;
+
+    return {
+      rutCliente,
+      dv,
+      fechaTransaccion,
+      montoCashback,
+      titulo,
+      idOferta,
+      idTransaccion,
+      estado,
     } as unknown as OutPutItemJSON<T>;
   });
 };

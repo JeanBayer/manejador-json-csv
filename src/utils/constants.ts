@@ -23,3 +23,5 @@ export const NavItems = [
     url: `/${RoutePath.FORMAT_OTHERS_CASHBACK}`,
   },
 ] as const;
+
+export const FormatDate = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS";

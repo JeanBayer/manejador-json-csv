@@ -26,7 +26,9 @@ export const SelectInput: React.FC<SelectInputProps> = ({
       </SelectTrigger>
       <SelectContent>
         {items?.map((item) => (
-          <SelectItem value={item.value}>{item.label}</SelectItem>
+          <SelectItem key={item.value} value={item.value}>
+            {item.label}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>
