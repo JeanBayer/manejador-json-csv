@@ -24,4 +24,4 @@ export const NavItems = [
   },
 ] as const;
 
-export const FormatDate = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS";
+export const FormatDate = "yyyy-MM-dd'T'HH:mm:ss";
