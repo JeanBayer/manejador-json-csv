@@ -23,7 +23,14 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@duplicate-complex-marker/*": ["./src/pages/duplicate-complex-marker/*"],
+      "@format-others-cashback/*": ["./src/pages/format-others-cashback/*"],
+      "@duplicate-marker/*": ["./src/pages/duplicate-marker/*"],
+      "@json-csv-converter/*": ["./src/pages/json-csv-converter/*"],
+      "@match-logic/*": ["./src/pages/match-logic/*"],
+      "@prueba/*": ["./src/pages/prueba/*"],
+      "@string-converter/*": ["./src/pages/string-converter/*"]
     }
   },
   "include": ["src"]

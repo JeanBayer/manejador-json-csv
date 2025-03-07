@@ -3,7 +3,7 @@ import { InputBlock } from "@/components/wrapper/input-block";
 import { OutputBlock } from "@/components/wrapper/output-block";
 import { TitlePage } from "@/components/wrapper/title-page";
 import { useCheckBox } from "@/hooks/use-check-box";
-import { useMatchLogic } from "@/hooks/use-match-logic";
+import { useMatchLogic } from "@match-logic/hooks/use-match-logic";
 
 export const MatchLogicPage = () => {
   const { selectedValues, ...restCheckBox } = useCheckBox();

@@ -7,7 +7,7 @@ import { DateTimePicker } from "@/components/wrapper/date-time-picker";
 import { OutputBlock } from "@/components/wrapper/output-block";
 import { SelectInput } from "@/components/wrapper/select-input";
 import { formatCurrencyLocale } from "@/utils/helpers";
-import { useOtherCashback } from "./hooks/use-other-cashback";
+import { useOtherCashback } from "@format-others-cashback/hooks/use-other-cashback";
 
 export const FormatOthersCashbackPage = () => {
   const {

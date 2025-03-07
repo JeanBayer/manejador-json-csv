@@ -1,9 +1,9 @@
 import { InputBlock } from "@/components/wrapper/input-block";
 import { OutputBlock } from "@/components/wrapper/output-block";
 import { TitlePage } from "@/components/wrapper/title-page";
-import { useDuplicateComplexMarker } from "@/hooks/use-duplicate-complex-marker";
+import { useDuplicateMarker } from "@duplicate-marker/hooks/use-duplicate-marker";
 
-export const DuplicateComplexMarkerPage = () => {
+export const DuplicateMarkerPage = () => {
   const {
     text,
     setText,
@@ -14,12 +14,12 @@ export const DuplicateComplexMarkerPage = () => {
     formattedOutput,
     totalRows,
     matchedRows,
-  } = useDuplicateComplexMarker();
+  } = useDuplicateMarker();
 
   return (
     <section>
       <TitlePage
-        title="Duplicate Complex Marker"
+        title="Duplicate Marker"
         info="This tool allows you to mark duplicates in a JSON array based on a specific field."
       />
       <div className="w-screen flex gap-8 px-4 py-4">

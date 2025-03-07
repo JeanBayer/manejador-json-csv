@@ -1,12 +1,12 @@
 import { Layout } from "@/layout";
-import { DuplicateComplexMarkerPage } from "@/pages/duplicate-complex-marker-page/page";
-import { DuplicateMarkerPage } from "@/pages/duplicate-marker-page/page";
-import { FormatOthersCashbackPage } from "@/pages/format-others-cashback/page"; // Importa la nueva página
-import { JsonCsvConverterPage } from "@/pages/json-csv-converter-page/page";
-import { MatchLogicPage } from "@/pages/match-logic/page";
-import { PruebaPage } from "@/pages/prueba/page";
-import { StringConverterPage } from "@/pages/string-converter/page";
 import { RoutePath } from "@/utils/constants";
+import { DuplicateComplexMarkerPage } from "@duplicate-complex-marker/page";
+import { DuplicateMarkerPage } from "@duplicate-marker/page";
+import { FormatOthersCashbackPage } from "@format-others-cashback/page"; // Importa la nueva página
+import { JsonCsvConverterPage } from "@json-csv-converter/page";
+import { MatchLogicPage } from "@match-logic/page";
+import { PruebaPage } from "@prueba/page";
+import { StringConverterPage } from "@string-converter/page";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 export const Router = () => {

@@ -1,7 +1,7 @@
 import { OutputBlock } from "@/components/wrapper/output-block";
 import { TextAreaInput } from "@/components/wrapper/textarea-input";
 import { TitlePage } from "@/components/wrapper/title-page";
-import { useJsonCsvConverter } from "@/hooks/use-json-csv-converter";
+import { useJsonCsvConverter } from "@json-csv-converter/hooks/use-json-csv-converter";
 
 export const JsonCsvConverterPage = () => {
   const {

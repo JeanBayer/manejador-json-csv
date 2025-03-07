@@ -1,7 +1,7 @@
 import { InputBlock } from "@/components/wrapper/input-block";
 import { TextAreaOutput } from "@/components/wrapper/textarea-output";
 import { TitlePage } from "@/components/wrapper/title-page";
-import { useStringConverter } from "@/hooks/use-string-converter";
+import { useStringConverter } from "@string-converter/hooks/use-string-converter";
 
 export const StringConverterPage = () => {
   const {
