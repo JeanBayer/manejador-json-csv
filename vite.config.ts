@@ -31,6 +31,10 @@ export default defineConfig({
         __dirname,
         "./src/pages/string-converter"
       ),
+      "@calculate-withdrawal-status": path.resolve(
+        __dirname,
+        "./src/pages/calculate-withdrawal-status"
+      ),
     },
   },
 });

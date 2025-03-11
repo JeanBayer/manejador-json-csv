@@ -4,16 +4,21 @@ import { Textarea } from "@/components/ui/textarea";
 interface TextAreaInputProps {
   text: string;
   setText: (value: string) => void;
+  label?: string;
 }
 
-export const TextAreaInput = ({ text, setText }: TextAreaInputProps) => {
+export const TextAreaInput = ({
+  text,
+  setText,
+  label = "Data Input JSON/CSV",
+}: TextAreaInputProps) => {
   const handleClear = () => {
     setText("");
   };
 
   return (
     <label className="block text-sm font-medium text-gray-700 max-w-[640px]">
-      Data Input JSON/CSV
+      {label}
       <div className="relative max-w-[640px]">
         <Textarea
           value={text}

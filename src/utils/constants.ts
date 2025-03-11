@@ -6,6 +6,7 @@ export const RoutePath = {
   DUPLICATE_COMPLEX_MARKER: "duplicate-complex-marker",
   PRUEBA: "prueba",
   FORMAT_OTHERS_CASHBACK: "format-others-cashback",
+  CALCULATE_WITHDRAWAL_STATUS: "calculate-withdrawal-status",
 };
 
 export const NavItems = [
@@ -21,6 +22,10 @@ export const NavItems = [
   {
     title: "Format Others Cashback",
     url: `/${RoutePath.FORMAT_OTHERS_CASHBACK}`,
+  },
+  {
+    title: "Calculate Withdrawal Status",
+    url: `/${RoutePath.CALCULATE_WITHDRAWAL_STATUS}`,
   },
 ] as const;
 

@@ -14,7 +14,10 @@
       "@json-csv-converter/*": ["./src/pages/json-csv-converter/*"],
       "@match-logic/*": ["./src/pages/match-logic/*"],
       "@prueba/*": ["./src/pages/prueba/*"],
-      "@string-converter/*": ["./src/pages/string-converter/*"]
+      "@string-converter/*": ["./src/pages/string-converter/*"],
+      "@calculate-withdrawal-status/*": [
+        "./src/pages/calculate-withdrawal-status/*"
+      ]
     }
   }
 }

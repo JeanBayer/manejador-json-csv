@@ -1,5 +1,6 @@
 import { Layout } from "@/layout";
 import { RoutePath } from "@/utils/constants";
+import { CalculateWithdrawalStatus } from "@calculate-withdrawal-status/page";
 import { DuplicateComplexMarkerPage } from "@duplicate-complex-marker/page";
 import { DuplicateMarkerPage } from "@duplicate-marker/page";
 import { FormatOthersCashbackPage } from "@format-others-cashback/page"; // Importa la nueva página
@@ -39,6 +40,10 @@ export const Router = () => {
           <Route
             path={RoutePath.FORMAT_OTHERS_CASHBACK}
             element={<FormatOthersCashbackPage />}
+          />
+          <Route
+            path={RoutePath.CALCULATE_WITHDRAWAL_STATUS}
+            element={<CalculateWithdrawalStatus />}
           />
         </Route>
       </Routes>
