@@ -2,6 +2,7 @@ import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { RoutePath } from "@/utils/constants";
 import { convertToFormat } from "@/utils/helpers";
+import { EXAMPLE_WITHDRAWAL } from "@calculate-withdrawal-status/utils/constant";
 import { handleWithdrawal } from "@calculate-withdrawal-status/utils/helper";
 import { useMemo } from "react";
 
@@ -33,6 +34,10 @@ export const useWithdrawalStatus = () => {
 
   const totalRows = markedData.length;
 
+  const handlePreloadExample = () => {
+    setText(JSON.stringify(EXAMPLE_WITHDRAWAL, null, 2));
+  };
+
   return {
     text,
     setText,
@@ -40,5 +45,6 @@ export const useWithdrawalStatus = () => {
     setOutputFormat,
     formattedOutput,
     totalRows,
+    handlePreloadExample,
   };
 };

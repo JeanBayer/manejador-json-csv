@@ -11,6 +11,7 @@ export const CalculateWithdrawalStatus = () => {
     setOutputFormat,
     formattedOutput,
     totalRows,
+    handlePreloadExample,
   } = useWithdrawalStatus();
 
   return (
@@ -18,11 +19,13 @@ export const CalculateWithdrawalStatus = () => {
       <TitlePage
         title="Calculate Withdrawal Status"
         info="Calculate Withdrawal Status"
+        buttonText="Preload Example"
+        onClick={handlePreloadExample}
       />
       <div className="w-screen flex gap-8 px-4 py-4">
         <div className="flex flex-col flex-1 gap-4">
           <label className="block text-sm font-medium text-gray-700">
-            Retiros
+            Listado de Retiros
           </label>
           <TextAreaInput
             text={text}

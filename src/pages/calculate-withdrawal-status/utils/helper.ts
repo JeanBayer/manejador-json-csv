@@ -14,27 +14,8 @@ export const handleWithdrawal = (retiros: any[] | null) => {
       estadoRetiro = null,
       transacciones = [],
     }) => {
-      // const transaccionPorEstado = retiro?.transacciones?.reduce((acc, t) => {
-      //   acc[t.estado] = acc[t.estado] || [];
-      //   acc[t.estado].push(t.identificador);
-      //   return acc;
-      // }, {});
-
-      const transaccionesPendiente = transacciones?.filter(
-        (item: { estado: string }) => item?.estado === "PENDIENTE"
-      );
-      const transaccionesPendientePago = transacciones?.filter(
-        (item: { estado: string }) => item?.estado === "PENDIENTE_PAGO"
-      );
-      const transaccionesAbonado = transacciones?.filter(
-        (item: { estado: string }) => item?.estado === "ABONADO"
-      );
-      const transaccionesRechazado = transacciones?.filter(
-        (item: { estado: string }) => item?.estado === "RECHAZADO"
-      );
-      const transaccionesErrorPago = transacciones?.filter(
-        (item: { estado: string }) => item?.estado === "ERROR_PAGO"
-      );
+      const { PENDIENTE, PENDIENTE_PAGO, ABONADO, RECHAZADO, ERROR_PAGO } =
+        groupIdentifiersByStatus(transacciones);
 
       const recalculatedWithdrawalStatus =
         recalculateWithdrawalStatus(transacciones);
@@ -52,34 +33,45 @@ export const handleWithdrawal = (retiros: any[] | null) => {
         cuentaAbono: cuentaAbono,
         origenCuenta: origenCuenta,
         estadoRetiro: estadoRetiro,
-        estadoRetiroRecalculado: estadoRetiro,
+        estadoRetiroRecalculado: recalculatedWithdrawalStatus,
         coincidenEstados: estadoRetiro === recalculatedWithdrawalStatus,
-        transaccionesPendienteQuantity: transaccionesPendiente?.length,
-        transaccionesPendiente: groupIdentifiersByStatus(
-          transaccionesPendiente
-        ),
-        transaccionesPendientePagoQuantity: transaccionesPendientePago.length,
-        transaccionesPendientePago: groupIdentifiersByStatus(
-          transaccionesPendientePago
-        ),
-        transaccionesAbonadoQuantity: transaccionesAbonado.length,
-        transaccionesAbonado: groupIdentifiersByStatus(transaccionesAbonado),
-        transaccionesRechazadoQuantity: transaccionesRechazado.length,
-        transaccionesRechazado: groupIdentifiersByStatus(
-          transaccionesRechazado
-        ),
-        transaccionesErrorPagoQuantity: transaccionesErrorPago.length,
-        transaccionesErrorPago: groupIdentifiersByStatus(
-          transaccionesErrorPago
-        ),
+        transaccionesPendienteQuantity: PENDIENTE?.length,
+        transaccionesPendiente: formatIdentifiers(PENDIENTE),
+        transaccionesPendientePagoQuantity: PENDIENTE_PAGO.length,
+        transaccionesPendientePago: formatIdentifiers(PENDIENTE_PAGO),
+        transaccionesAbonadoQuantity: ABONADO.length,
+        transaccionesAbonado: formatIdentifiers(ABONADO),
+        transaccionesRechazadoQuantity: RECHAZADO.length,
+        transaccionesRechazado: formatIdentifiers(RECHAZADO),
+        transaccionesErrorPagoQuantity: ERROR_PAGO.length,
+        transaccionesErrorPago: formatIdentifiers(ERROR_PAGO),
       };
     }
   );
 };
 
-const groupIdentifiersByStatus = (transacciones: any[]) => {
+const groupIdentifiersByStatus = (transacciones: any[]) =>
+  transacciones?.reduce(
+    (
+      acc: { [x: string]: any[] },
+      t: { estado: string | number; identificador: any }
+    ) => {
+      acc[t.estado] = acc[t.estado] || [];
+      acc[t.estado].push(t.identificador);
+      return acc;
+    },
+    {
+      PENDIENTE: [],
+      PENDIENTE_PAGO: [],
+      ABONADO: [],
+      RECHAZADO: [],
+      ERROR_PAGO: [],
+    }
+  );
+
+const formatIdentifiers = (transacciones: any[]) => {
   if (!transacciones?.length) return "N/A";
-  return `'${transacciones?.map((item) => item?.identificador).join("'*'")}'`;
+  return `'${transacciones.join("'*'")}'`;
 };
 
 const recalculateWithdrawalStatus = (transacciones: any[]): string => {
