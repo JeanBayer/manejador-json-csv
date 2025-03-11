@@ -11,6 +11,7 @@ export const CalculateWithdrawalStatus = () => {
     setOutputFormat,
     formattedOutput,
     totalRows,
+    matchedRows,
     handlePreloadExample,
   } = useWithdrawalStatus();
 
@@ -38,7 +39,7 @@ export const CalculateWithdrawalStatus = () => {
           setOutputFormat={setOutputFormat}
           output={formattedOutput}
           totalRows={totalRows}
-          matchedRows={totalRows}
+          matchedRows={matchedRows}
         />
       </div>
     </section>

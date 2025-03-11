@@ -17,7 +17,7 @@ export const useWithdrawalStatus = () => {
       "csv"
     );
 
-  const markedData = useMemo(() => {
+  const matchedData = useMemo(() => {
     try {
       const result = handleWithdrawal(jsonOutput);
       return result;
@@ -28,11 +28,19 @@ export const useWithdrawalStatus = () => {
   }, [jsonOutput]);
 
   const formattedOutput = useMemo(
-    () => convertToFormat(markedData, outputFormatDebounce),
-    [markedData, outputFormatDebounce]
+    () => convertToFormat(matchedData, outputFormatDebounce),
+    [matchedData, outputFormatDebounce]
   );
 
-  const totalRows = markedData.length;
+  const infoData = useMemo(() => {
+    const totalRows = matchedData?.length;
+    const matchedRows = matchedData?.filter(
+      (item) =>
+        item.coincidenEstados === false ||
+        item.coincidenCantidadTransacciones === false
+    ).length;
+    return { totalRows, matchedRows };
+  }, [matchedData]);
 
   const handlePreloadExample = () => {
     setText(JSON.stringify(EXAMPLE_WITHDRAWAL, null, 2));
@@ -44,7 +52,7 @@ export const useWithdrawalStatus = () => {
     outputFormat,
     setOutputFormat,
     formattedOutput,
-    totalRows,
     handlePreloadExample,
+    ...infoData,
   };
 };
