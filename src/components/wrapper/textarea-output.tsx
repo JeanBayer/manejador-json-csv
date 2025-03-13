@@ -5,19 +5,23 @@ import { useDownloadFile } from "@/hooks/use-download-file";
 
 interface TextAreaOutputProps {
   value: string;
+  label?: string;
 }
 
-export const TextAreaOutput = ({ value }: TextAreaOutputProps) => {
+export const TextAreaOutput = ({
+  value,
+  label = "Data Output JSON/CSV",
+}: TextAreaOutputProps) => {
   const { copyToClipboard } = useCopyToClipboard();
   const { downloadFile } = useDownloadFile();
   return (
     <label className="block text-sm font-medium text-gray-700">
-      Output Data
+      {label}
       <div className="relative">
         <Textarea
           value={value || ""}
           placeholder="output"
-          className="mt-1 block w-full h-[540px]"
+          className="mt-1 block w-full h-[540px] min-w-[320px]"
           readOnly
         />
         <div className="absolute top-2 right-2 flex gap-2">

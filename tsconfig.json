@@ -17,7 +17,8 @@
       "@string-converter/*": ["./src/pages/string-converter/*"],
       "@calculate-withdrawal-status/*": [
         "./src/pages/calculate-withdrawal-status/*"
-      ]
+      ],
+      "@split-data/*": ["./src/pages/split-data/*"]
     }
   }
 }

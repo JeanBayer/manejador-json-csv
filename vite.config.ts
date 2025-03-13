@@ -35,6 +35,7 @@ export default defineConfig({
         __dirname,
         "./src/pages/calculate-withdrawal-status"
       ),
+      "@split-data": path.resolve(__dirname, "./src/pages/split-data"),
     },
   },
 });

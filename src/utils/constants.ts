@@ -7,6 +7,7 @@ export const RoutePath = {
   PRUEBA: "prueba",
   FORMAT_OTHERS_CASHBACK: "format-others-cashback",
   CALCULATE_WITHDRAWAL_STATUS: "calculate-withdrawal-status",
+  SPLIT_DATA: "split-data",
 };
 
 export const NavItems = [
@@ -26,6 +27,10 @@ export const NavItems = [
   {
     title: "Calculate Withdrawal Status",
     url: `/${RoutePath.CALCULATE_WITHDRAWAL_STATUS}`,
+  },
+  {
+    title: "Split Data",
+    url: `/${RoutePath.SPLIT_DATA}`,
   },
 ] as const;
 

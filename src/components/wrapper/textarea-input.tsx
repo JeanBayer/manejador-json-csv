@@ -17,7 +17,7 @@ export const TextAreaInput = ({
   };
 
   return (
-    <label className="block text-sm font-medium text-gray-700 max-w-[640px]">
+    <label className="block text-sm font-medium text-gray-700 max-w-[640px] min-w-[320px]">
       {label}
       <div className="relative max-w-[640px]">
         <Textarea

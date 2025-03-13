@@ -7,6 +7,7 @@ import { FormatOthersCashbackPage } from "@format-others-cashback/page"; // Impo
 import { JsonCsvConverterPage } from "@json-csv-converter/page";
 import { MatchLogicPage } from "@match-logic/page";
 import { PruebaPage } from "@prueba/page";
+import { SplitDataPage } from "@split-data/page";
 import { StringConverterPage } from "@string-converter/page";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
@@ -45,6 +46,7 @@ export const Router = () => {
             path={RoutePath.CALCULATE_WITHDRAWAL_STATUS}
             element={<CalculateWithdrawalStatus />}
           />
+          <Route path={RoutePath.SPLIT_DATA} element={<SplitDataPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
