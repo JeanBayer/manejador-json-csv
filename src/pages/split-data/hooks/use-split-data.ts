@@ -1,6 +1,6 @@
 import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { RoutePath } from "@/utils/constants";
-import { splitTextByLines } from "@/utils/textos";
+import { splitTextByLines } from "@split-data/utils/string";
 import { useMemo } from "react";
 
 export const useSplitData = () => {
