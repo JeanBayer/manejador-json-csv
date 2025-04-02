@@ -46,12 +46,17 @@ export const convertToOtherCashbackFormat = <T>(
   monto: string,
   tituloOferta: string,
   idOferta: string,
-  estadoOferta: string
+  estadoOferta: string,
+  montoTransaccion: string
 ): OutPutItemJSON<T>[] => {
   if (!ruts?.length) throw new Error("No hay ruts");
 
   const montoNumber = Number.parseFloat(monto);
   if (montoNumber <= 0) throw new Error("Monto invalido");
+
+  const montoTransaccionNumber = Number.parseFloat(montoTransaccion);
+  if (montoTransaccionNumber <= 0)
+    throw new Error("Monto transaccion invalido");
 
   if (!date) throw new Error("Fecha invalida");
   const dateFormat = format(date, FormatDate, { locale: es });
@@ -81,6 +86,7 @@ export const convertToOtherCashbackFormat = <T>(
     const idOferta = idOfertaString;
     const idTransaccion = uuidv4();
     const estado = estadoOfertaString;
+    const montoTransaccion = montoTransaccionNumber;
 
     return {
       rutCliente,
@@ -91,6 +97,7 @@ export const convertToOtherCashbackFormat = <T>(
       idOferta,
       idTransaccion,
       estado,
+      montoTransaccion,
     } as unknown as OutPutItemJSON<T>;
   });
 };

@@ -35,3 +35,10 @@ export const NavItems = [
 ] as const;
 
 export const FormatDate = "yyyy-MM-dd'T'HH:mm:ss";
+export const FormatDateOtrosCashbackFilename = "yyyyMMdd";
+
+export const ItemsOutputFormat = [
+  { value: "json", label: "JSON" },
+  { value: "csv", label: "CSV" },
+  { value: "ssv", label: "SSV" },
+];

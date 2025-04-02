@@ -17,6 +17,8 @@ export const FormatOthersCashbackPage = () => {
     setDate,
     monto,
     setMonto,
+    montoTransaccion,
+    setMontoTransaccion,
     tituloOferta,
     setTituloOferta,
     idOferta,
@@ -29,6 +31,7 @@ export const FormatOthersCashbackPage = () => {
     rutsUnicos,
     rutsTotales,
     montoTotal,
+    filename,
   } = useOtherCashback();
 
   return (
@@ -67,6 +70,24 @@ export const FormatOthersCashbackPage = () => {
                 min={1}
                 onChange={(e) => {
                   setMonto(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="monto-transaccion"
+              >
+                Monto Transaccion
+              </label>
+              <Input
+                className="w-84"
+                id="monto-transaccion"
+                type="number"
+                value={montoTransaccion}
+                min={1}
+                onChange={(e) => {
+                  setMontoTransaccion(e.target.value);
                 }}
               />
             </div>
@@ -140,8 +161,8 @@ export const FormatOthersCashbackPage = () => {
           outputFormat={outputFormat}
           setOutputFormat={setOutputFormat}
           output={formattedOutput}
-          // totalRows={totalRows}
-          // matchedRows={matchedRows}
+          filename={filename}
+          itemOutput={[{ value: "ssv", label: "SSV" }]}
         />
       </div>
     </section>

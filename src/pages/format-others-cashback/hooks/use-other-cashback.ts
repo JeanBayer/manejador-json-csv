@@ -2,12 +2,14 @@ import { useInputWithFormat } from "@/hooks/use-input-with-format";
 import { useStateDebounce } from "@/hooks/use-state-debounce";
 import { useToast } from "@/hooks/use-toast";
 import { OutPutItemJSON } from "@/types/output";
-import { RoutePath } from "@/utils/constants";
+import { FormatDateOtrosCashbackFilename, RoutePath } from "@/utils/constants";
 import {
   calculateUniqueData,
   convertToFormat,
   convertToOtherCashbackFormat,
 } from "@/utils/helpers";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { useEffect, useMemo, useState } from "react";
 
 export const useOtherCashback = () => {
@@ -28,6 +30,11 @@ export const useOtherCashback = () => {
     `${RoutePath.FORMAT_OTHERS_CASHBACK}-input-monto`,
     "1"
   );
+  const [montoTransaccion, setMontoTransaccion, montoTransaccionDebounce] =
+    useStateDebounce(
+      `${RoutePath.FORMAT_OTHERS_CASHBACK}-input-monto-transaccion`,
+      "1"
+    );
   const [tituloOferta, setTituloOferta, tituloOfertaDebounce] =
     useStateDebounce(
       `${RoutePath.FORMAT_OTHERS_CASHBACK}-input-titulo-oferta`,
@@ -60,7 +67,8 @@ export const useOtherCashback = () => {
         montoDebounce,
         tituloOfertaDebounce,
         idOfertaDebounce,
-        estadoOfertaDebounce
+        estadoOfertaDebounce,
+        montoTransaccionDebounce
       );
       setMatchedData(result);
     } catch (error) {
@@ -81,6 +89,7 @@ export const useOtherCashback = () => {
     tituloOfertaDebounce,
     idOfertaDebounce,
     estadoOfertaDebounce,
+    montoTransaccionDebounce,
     toast,
   ]);
 
@@ -90,6 +99,14 @@ export const useOtherCashback = () => {
     const rutsTotales = matchedData?.length;
     return { montoTotal, rutsUnicos, rutsTotales };
   }, [matchedData, monto]);
+
+  // format : otroscashback_yyyymmdd.csv
+  const filename = useMemo(() => {
+    const dateFormat = format(new Date(), FormatDateOtrosCashbackFilename, {
+      locale: es,
+    });
+    return `otroscashback_${dateFormat}.csv`;
+  }, []);
 
   return {
     inputRuts,
@@ -107,6 +124,9 @@ export const useOtherCashback = () => {
     outputFormat,
     setOutputFormat,
     formattedOutput,
+    montoTransaccion,
+    setMontoTransaccion,
+    filename,
     ...infoData,
   };
 };

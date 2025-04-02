@@ -6,11 +6,13 @@ import { useDownloadFile } from "@/hooks/use-download-file";
 interface TextAreaOutputProps {
   value: string;
   label?: string;
+  filename?: string;
 }
 
 export const TextAreaOutput = ({
   value,
   label = "Data Output JSON/CSV",
+  filename = "output.txt",
 }: TextAreaOutputProps) => {
   const { copyToClipboard } = useCopyToClipboard();
   const { downloadFile } = useDownloadFile();
@@ -32,7 +34,7 @@ export const TextAreaOutput = ({
             Copy
           </Button>
           <Button
-            onClick={() => downloadFile(value, "output.txt")}
+            onClick={() => downloadFile(value, filename)}
             className="bg-green-500 text-white"
           >
             Download

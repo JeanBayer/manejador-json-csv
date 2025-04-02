@@ -13,7 +13,7 @@ export const extractRut = (
   if (!rutCompleto) throw new Error("Rut inválido");
   if (!isRutValid(rutCompleto)) throw new Error("Rut inválido");
 
-  return rutCompleto?.split("-");
+  return rutCompleto?.toLowerCase().split("-");
 };
 
 const calculateDVRut = (T: number) => {
